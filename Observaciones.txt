@@ -1,0 +1,5 @@
+Los mail tambien deberian ser unicos!!.
+
+Al crear nuevos profesores puedo asignar directamente estado = 'A', no hace falta pasar la 'A' por body.
+
+En las validaciones puedo agregar una que vuelva todos los string a minusculas. Sino "Sentadilla" y "sentadilla" pueden ser agregados sin ver duplicidad.
