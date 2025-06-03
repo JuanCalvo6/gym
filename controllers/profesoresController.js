@@ -14,6 +14,7 @@ const listarProfesores = async(req, res) =>{
 
         if(profesores.length === 0 ) return res.status(400).json({message: "No hay profesores"});
         return res.send(profesores);
+        
     } catch (error) {
         return res.status(400).json({message: error.message});
     }
