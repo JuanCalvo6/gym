@@ -10,3 +10,7 @@ la misma franja horaria.
 En los pases tendria que controlar que el horaInicio y HoraFin no sean iguales y que horaFin sea mayor que horaInicio.
 
 los metodos para traer uno o todos no tienen en cuenta el estado. Agregar!.
+
+Agregar a clientes que el DNI debe ser único. El documento deberia poder modificarse???
+
+El dni esta mal llamado, deberia ser mas generico como ser documento.
