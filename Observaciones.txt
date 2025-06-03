@@ -3,3 +3,10 @@ Los mail tambien deberian ser unicos!!.
 Al crear nuevos profesores puedo asignar directamente estado = 'A', no hace falta pasar la 'A' por body.
 
 En las validaciones puedo agregar una que vuelva todos los string a minusculas. Sino "Sentadilla" y "sentadilla" pueden ser agregados sin ver duplicidad.
+
+En los pases tambien deberia controlar que ademas de que no existan pases con el mismo nombre, no tiene logica que existan pases con
+la misma franja horaria.
+
+En los pases tendria que controlar que el horaInicio y HoraFin no sean iguales y que horaFin sea mayor que horaInicio.
+
+los metodos para traer uno o todos no tienen en cuenta el estado. Agregar!.

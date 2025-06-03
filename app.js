@@ -3,6 +3,7 @@ const cors = require('cors');
 const autRoutes = require('./routes/autRoutes.js');
 const profesoresRoutes = require('./routes/profesoresRoutes.js')
 const ejerciciosRoutes =  require('./routes/ejerciciosRoutes.js');
+const pasesRoutes = require('./routes/pasesRoutes.js');
 const cookieParser = require('cookie-parser');
 
 const app = express();
@@ -20,5 +21,6 @@ app.use(cors({
 app.use('/api', autRoutes);
 app.use('/api', profesoresRoutes);
 app.use('/api', ejerciciosRoutes);
+app.use('/api', pasesRoutes)
 
 module.exports = app;
