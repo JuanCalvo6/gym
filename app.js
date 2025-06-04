@@ -5,6 +5,7 @@ const profesoresRoutes = require('./routes/profesoresRoutes.js')
 const ejerciciosRoutes =  require('./routes/ejerciciosRoutes.js');
 const pasesRoutes = require('./routes/pasesRoutes.js');
 const clientesRoutes = require('./routes/clientesRoutes.js');
+const asistenciasRoutes = require('./routes/asistenciasRoutes.js');
 const cookieParser = require('cookie-parser');
 
 const app = express();
@@ -24,5 +25,6 @@ app.use('/api', profesoresRoutes);
 app.use('/api', ejerciciosRoutes);
 app.use('/api', pasesRoutes);
 app.use('/api', clientesRoutes);
+app.use('/api', asistenciasRoutes);
 
 module.exports = app;
