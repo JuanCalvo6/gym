@@ -22,3 +22,5 @@ En las consultas en vez de devolver los id, hacer las consultas con JOIN y ya de
 Agregar el control de que la fecha de inicio de una nueva inscripcion no debe estar dentro de otra inscripcion.
 
 A las incripciones le tengo que pasar el precio desde la consulta al pase para mantener la consistencia de los valores, no desde body.
+
+En las rutinas el nombre no debe ser unico en general, puede ser unico para cada cliente. Permitir signos en los nombres, no solo letras.
