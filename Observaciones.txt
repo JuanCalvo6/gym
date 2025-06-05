@@ -14,3 +14,11 @@ los metodos para traer uno o todos no tienen en cuenta el estado. Agregar!.
 Agregar a clientes que el DNI debe ser único. El documento deberia poder modificarse???
 
 El dni esta mal llamado, deberia ser mas generico como ser documento.
+
+En los msjs de respuesta puedo hacerlo mas detallado y poner los nombres de los clientes, profesores...
+
+En las consultas en vez de devolver los id, hacer las consultas con JOIN y ya devolver datos. 
+
+Agregar el control de que la fecha de inicio de una nueva inscripcion no debe estar dentro de otra inscripcion.
+
+A las incripciones le tengo que pasar el precio desde la consulta al pase para mantener la consistencia de los valores, no desde body.

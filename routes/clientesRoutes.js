@@ -10,16 +10,23 @@ const { listarClientes,
 const { listarAsistenciasCliente,
         newAsistenciaCliente,
         obtenerAsistenciaCliente} =  require('../controllers/asistenciasController.js');
+const { listarInscripcionesCliente,
+        obtenerInscripcionCliente,
+        newInscripcionCliente} = require('../controllers/inscripcionesController.js');
 const validarCliente = require('../middlewares/validarCliente.js');
 const validarAsistencia = require('../middlewares/validarAsistencia.js');
+const validarInscripcion = require('../middlewares/validarInscripcion.js');
 
 router.get('/clientes', listarClientes);
 router.get('/clientes/:id',obtenerCliente);
 router.get('/clientes/:id/asistencias', listarAsistenciasCliente);
 router.get('/clientes/:id/asistencias/:idAsistencia', obtenerAsistenciaCliente);
+router.get('/clientes/:id/inscripciones', listarInscripcionesCliente);
+router.get('/clientes/:id/inscripciones/:idInscripcion', obtenerInscripcionCliente)
 
 router.post('/clientes',validarCliente, newCliente);
 router.post('/clientes/:id/asistencias', validarAsistencia, newAsistenciaCliente);
+router.post('/clientes/:id/inscripciones',validarInscripcion, newInscripcionCliente);
 
 router.put('/clientes/:id',validarCliente, updateCliente);
 
