@@ -6,9 +6,17 @@ const { listarRutinas,
         darAltaRutina,
         darBajaRutina,
         eliminarRutina} = require('../controllers/rutinasController.js');
+const { listarLineasDeRutina,
+        obtenerLineaDeRutina,
+        nuevaLineaDeRutina} = require('../controllers/lineasDeRutinaController.js');
+const validarLineaDeRutina = require('../middlewares/validarLineaDeRutina.js')
 
 router.get('/rutinas', listarRutinas);
 router.get('/rutinas/:id', obtenerRutina);
+router.get('/rutinas/:id/lineasDeRutina', listarLineasDeRutina);
+router.get('/rutinas/:id/lineasDeRutina/:idLinea', obtenerLineaDeRutina);
+
+router.post('/rutinas/:id/lineasDeRutina',validarLineaDeRutina,  nuevaLineaDeRutina);
 
 router.put('/rutinas/:id', actualizarRutina);
 

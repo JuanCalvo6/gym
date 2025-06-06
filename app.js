@@ -8,6 +8,7 @@ const clientesRoutes = require('./routes/clientesRoutes.js');
 const asistenciasRoutes = require('./routes/asistenciasRoutes.js');
 const inscripcionesRoutes = require('./routes/inscripcionesRoutes.js');
 const rutinasRoutes = require('./routes/rutinasRoutes.js');
+const lineasDeRutinaRoutes = require('./routes/lineasDeRutinaRoutes.js');
 const cookieParser = require('cookie-parser');
 
 const app = express();
@@ -30,5 +31,6 @@ app.use('/api', clientesRoutes);
 app.use('/api', asistenciasRoutes);
 app.use('/api', inscripcionesRoutes);
 app.use('/api', rutinasRoutes);
+app.use('/api', lineasDeRutinaRoutes);
 
 module.exports = app;
