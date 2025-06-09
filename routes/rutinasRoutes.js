@@ -10,6 +10,11 @@ const { listarLineasDeRutina,
         obtenerLineaDeRutina,
         nuevaLineaDeRutina} = require('../controllers/lineasDeRutinaController.js');
 const validarLineaDeRutina = require('../middlewares/validarLineaDeRutina.js')
+const { validarToken } = require('../middlewares/validarToken.js');
+const { validarRol } = require('../middlewares/validarRol.js');
+
+router.use(validarToken);
+router.use(validarRol("admin"));
 
 router.get('/rutinas', listarRutinas);
 router.get('/rutinas/:id', obtenerRutina);

@@ -20,6 +20,11 @@ const validarCliente = require('../middlewares/validarCliente.js');
 const validarAsistencia = require('../middlewares/validarAsistencia.js');
 const validarInscripcion = require('../middlewares/validarInscripcion.js');
 const validarRutina =  require('../middlewares/validarRutina.js');
+const { validarToken } = require('../middlewares/validarToken.js');
+const { validarRol } = require('../middlewares/validarRol.js');
+
+router.use(validarToken);
+router.use(validarRol("prof"));
 
 router.get('/clientes', listarClientes);
 router.get('/clientes/:id',obtenerCliente);

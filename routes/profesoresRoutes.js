@@ -12,8 +12,11 @@ const validarProfesor = require('../middlewares/validarProfesor.js');
 
 const router = express.Router();
 
-router.get('/profesores',validarToken, validarRol("admin"), listarProfesores);
-router.get('/profesores/:id',validarToken, obtenerProfesor);
+router.use(validarToken);
+router.use(validarRol("admin"));
+
+router.get('/profesores', listarProfesores);
+router.get('/profesores/:id', obtenerProfesor);
 
 router.post('/profesores',validarProfesor, newProfesor);
 

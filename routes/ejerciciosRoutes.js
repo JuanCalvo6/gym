@@ -7,7 +7,11 @@ const { listarEjercicios,
         darBajaEjercicio,
         darAltaEjercicio,
         deleteEjercicio} =  require('../controllers/ejerciciosController.js');
+const { validarToken } = require('../middlewares/validarToken.js');
+const { validarRol } = require('../middlewares/validarRol.js');
 
+router.use(validarToken);
+router.use(validarRol("prof"));
 
 router.get('/ejercicios', listarEjercicios);
 router.get('/ejercicios/:id', obtenerEjercicio);
