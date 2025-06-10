@@ -1,5 +1,6 @@
 require('dotenv').config();
 const bcrypt = require('bcryptjs');
+const jwt = require('jsonwebtoken');
 const { getUsuario } = require('../models/autModel');
 const {generarToken} = require('../utils/generarToken.js')
 
@@ -34,7 +35,23 @@ const logout = async(req, res) =>{
     return res.status(200).json({message: "Sesión Cerrada"});
 }
 
+const verifyToken = async(req, res) =>{
+    const {token} = req.cookies;
+
+    if(!token) return res.status(401).json({message: "No autorizado, sin token"});
+    
+    jwt.verify(token, process.env.JWT_KEY, async(error, decode) =>{
+        if(error) return res.status(401).json({message: "Token invalido"});
+
+        const userFound = await getUsuario(decode.user);
+        if(userFound.length === 0) return res.status(401).json({message: "No autorizado, usuario no encontrado"});
+
+        return res.send(userFound[0]); 
+    })
+}
+
 module.exports = {
     login,
-    logout
+    logout,
+    verifyToken
 };
