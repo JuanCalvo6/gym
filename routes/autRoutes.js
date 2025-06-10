@@ -9,6 +9,6 @@ router.post('/login',validarLogin, login);
 
 router.post('/logout',validarToken, logout);
 
-router.get('/verify', verifyToken)
+router.get('/verify',validarToken, verifyToken)
 
 module.exports = router;

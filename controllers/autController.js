@@ -42,8 +42,8 @@ const verifyToken = async(req, res) =>{
     
     jwt.verify(token, process.env.JWT_KEY, async(error, decode) =>{
         if(error) return res.status(401).json({message: "Token invalido"});
-
-        const userFound = await getUsuario(decode.user);
+        const userFound = await getUsuario(decode.usuario);
+        
         if(userFound.length === 0) return res.status(401).json({message: "No autorizado, usuario no encontrado"});
 
         return res.send(userFound[0]); 
