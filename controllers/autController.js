@@ -23,7 +23,10 @@ const login = async(req, res) =>{
             tipo: tipo
         });
         res.cookie('token', token)
-        res.send(userFound[0]);
+        res.send({
+            usuario: user,
+            tipo: tipo
+        });
         
     } catch (error) {
         res.status(500).json({message: error.message})
@@ -45,8 +48,11 @@ const verifyToken = async(req, res) =>{
         const userFound = await getUsuario(decode.usuario);
         
         if(userFound.length === 0) return res.status(401).json({message: "No autorizado, usuario no encontrado"});
-
-        return res.send(userFound[0]); 
+        const {usuario: user, tipo} =  userFound[0];
+        res.send({
+            usuario: user,
+            tipo: tipo
+        });
     })
 }
 
