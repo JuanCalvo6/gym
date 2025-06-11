@@ -7,7 +7,7 @@ const { validarToken } = require('../middlewares/validarToken.js');
 const { validarRol } = require('../middlewares/validarRol.js');
 
 router.use(validarToken);
-router.use(validarRol("prof"));
+// router.use(validarRol("prof"));
 
 router.get('/asistencias', listarAsistencias);
 router.get('/asistencias/:id', obtenerAsistencia);

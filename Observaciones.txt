@@ -37,3 +37,5 @@ En las creaciones relacionadas con otras tablas tendria que controlar que se pue
 solo se deben poder seleccionar ejercicios que esten en estado 'A'.
 
 Clasificar los tipos de errores para poder mostrarlos mejor en el frontend (Seguir el ejemplo de validarLogin).
+
+Controlar el tema de poner un use(validarRol) generico porque afecta desde el archivo app.

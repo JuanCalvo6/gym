@@ -12,7 +12,7 @@ const { validarToken } = require('../middlewares/validarToken.js');
 const { validarRol } = require('../middlewares/validarRol.js');
 
 router.use(validarToken);
-router.use(validarRol("admin"));
+// router.use(validarRol("admin"));
 
 router.get('/pases', listarPases);
 router.get('/pases/:id', obtenerPase);

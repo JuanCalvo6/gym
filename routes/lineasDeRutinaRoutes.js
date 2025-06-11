@@ -10,7 +10,7 @@ const { validarToken } = require('../middlewares/validarToken.js');
 const { validarRol } = require('../middlewares/validarRol.js');
 
 router.use(validarToken);
-router.use(validarRol("prof"));
+// router.use(validarRol("prof"));
 
 router.get('/lineasDeRutina', listarLineas);
 router.get('/lineasDeRutina/:id', obtenerLinea);

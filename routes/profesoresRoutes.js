@@ -13,7 +13,7 @@ const validarProfesor = require('../middlewares/validarProfesor.js');
 const router = express.Router();
 
 router.use(validarToken);
-router.use(validarRol("admin"));
+// router.use(validarRol("admin"));
 
 router.get('/profesores', listarProfesores);
 router.get('/profesores/:id', obtenerProfesor);

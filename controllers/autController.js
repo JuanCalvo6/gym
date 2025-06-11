@@ -17,13 +17,15 @@ const login = async(req, res) =>{
 
         if(!isMatch) return res.status(400).json({message: 'Datos incorrectos'});
 
-        const {usuario: user, tipo} =  userFound[0];
+        const {id,nombre,usuario: user, tipo} =  userFound[0];
         const token = await generarToken({
             usuario: user,
             tipo: tipo
         });
         res.cookie('token', token)
         res.send({
+            id: id,
+            nombre: nombre,
             usuario: user,
             tipo: tipo
         });
@@ -48,8 +50,10 @@ const verifyToken = async(req, res) =>{
         const userFound = await getUsuario(decode.usuario);
         
         if(userFound.length === 0) return res.status(401).json({message: "No autorizado, usuario no encontrado"});
-        const {usuario: user, tipo} =  userFound[0];
+        const {id, nombre, usuario: user, tipo} =  userFound[0];
         res.send({
+            id: id,
+            nombre: nombre,
             usuario: user,
             tipo: tipo
         });

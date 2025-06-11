@@ -12,7 +12,7 @@ const { validarToken } = require('../middlewares/validarToken.js');
 const { validarRol } = require('../middlewares/validarRol.js');
 
 router.use(validarToken);
-router.use(validarRol("prof"));
+// router.use(validarRol("prof"));
 
 router.get('/inscripciones', listarInscripciones);
 router.get('/inscripciones/:id', obtenerInscripcion);
