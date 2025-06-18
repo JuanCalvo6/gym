@@ -1,4 +1,5 @@
-const { getClientes,
+const { getAllClientes, getClientes, 
+        getAllAltaClientes, getAltaClientes,
         getClienteById,
         crearCliente,
         modificarCliente,
@@ -7,12 +8,34 @@ const { getClientes,
         eliminarCliente} = require('../models/clientesModel.js');
 
 const listarClientes = async(req, res) =>{
+    const {cadena, incluirBajas} = req.query;
+    const bajas = incluirBajas === 'true';
+
     try {
-        const clientes = await getClientes();
-
-        if(clientes.length === 0) return res.status(400).json({message: "No hay clientes"})
-        return res.send(clientes);
-
+        if(bajas){
+            if(cadena === ''){
+                const clientes = await getAllClientes()
+                if(clientes.length === 0) return res.status(400).json({message: "No hay clientes"})
+                return res.send(clientes);
+            }
+            else{
+                const clientes = await getClientes(cadena)
+                if(clientes.length === 0) return res.status(400).json({message: "No hay clientes con ese apellido"})
+                return res.send(clientes);
+            }
+        }
+        else{
+            if(cadena === ''){
+                const clientes = await getAllAltaClientes()
+                if(clientes.length === 0) return res.status(400).json({message: "No hay clientes de Alta"})
+                return res.send(clientes);
+            }
+            else{
+                const clientes = await getAltaClientes(cadena)
+                if(clientes.length === 0) return res.status(400).json({message: "No hay clientes de Alta con ese apellido"})
+                return res.send(clientes);
+            }            
+        }  
     } catch (error) {
         return res.status(400).json({message: error.message});
     }

@@ -1,9 +1,46 @@
 const pool = require('../config/db.js');
 
-const getClientes = async() =>{
+const getAllClientes = async() =>{
     const [clientes] =  await pool.query(
-        `SELECT nombres, apellidos, tipoDni, dni, huella, telefono, direccion, mail, estado
-        FROM clientes`
+        `SELECT idCliente, nombres, apellidos, tipoDni, dni, huella, telefono, direccion, mail, estado
+        FROM clientes
+        ORDER BY estado, apellidos, nombres`
+    );
+    return clientes;
+}
+
+const getClientes = async(cadena) =>{
+    const exp = `${cadena}%`;
+
+    const [clientes] =  await pool.query(
+        `SELECT idCliente, nombres, apellidos, tipoDni, dni, huella, telefono, direccion, mail, estado
+        FROM clientes
+        WHERE apellidos LIKE ? OR nombres LIKE ?
+        ORDER BY estado, apellidos, nombres`,
+        [exp, exp]
+    );
+    return clientes;
+}
+
+const getAllAltaClientes = async() =>{
+    const [clientes] =  await pool.query(
+        `SELECT idCliente, nombres, apellidos, tipoDni, dni, huella, telefono, direccion, mail, estado
+        FROM clientes
+        WHERE estado = 'A'
+        ORDER BY estado, apellidos, nombres`
+    );
+    return clientes;
+}
+
+const getAltaClientes = async(cadena) =>{
+    const exp = `${cadena}%`;
+
+    const [clientes] =  await pool.query(
+        `SELECT idCliente, nombres, apellidos, tipoDni, dni, huella, telefono, direccion, mail, estado
+        FROM clientes
+        WHERE estado = 'A' AND (apellidos LIKE ? OR nombres LIKE ?)
+        ORDER BY estado, apellidos, nombres`,
+        [exp, exp]
     );
     return clientes;
 }
@@ -95,7 +132,8 @@ const eliminarCliente = async(id) =>{
 }
 
 module.exports = {
-    getClientes,
+    getAllClientes, getClientes,
+    getAllAltaClientes, getAltaClientes,
     getClienteById,
     crearCliente,
     modificarCliente, 
