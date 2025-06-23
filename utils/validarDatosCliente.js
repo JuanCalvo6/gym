@@ -32,9 +32,6 @@ function validarDatosCliente (datos){
     if(datos.mail && !/^[\w-.]+@([\w-]+\.)+[\w-]{2,4}$/.test(datos.mail)) 
         errores.push('El mail no tiene un formato válido.');
 
-    if (!['A', 'B'].includes(datos.estado)) 
-        errores.push('El estado debe ser A (activo) o B (baja).');
-
     return errores;
 }
 

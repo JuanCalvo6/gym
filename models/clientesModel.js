@@ -59,7 +59,7 @@ const crearCliente = async(datos) =>{
     await pool.query(
         `INSERT INTO clientes
         (nombres, apellidos, tipoDni, dni, huella, telefono, direccion, mail, estado)
-        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)`,
+        VALUES (?, ?, ?, ?, ?, ?, ?, ?, 'A')`,
         [datos.nombres,
         datos.apellidos,
         datos.tipoDni,
@@ -67,8 +67,7 @@ const crearCliente = async(datos) =>{
         datos.huella,
         datos.telefono,
         datos.direccion,
-        datos.mail,
-        datos.estado]
+        datos.mail]
     );
     return;
 }
