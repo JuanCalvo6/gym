@@ -4,6 +4,7 @@ const {getPaseById} = require('../models/pasesModel.js');
 const { getInscripciones,
         getInscripcionById,
         getInscripcionesByCliente,
+        getInscripcionesAltaByCliente,
         getInscripcionByCliente,
         crearInscripcion,
         updateInscripcion,
@@ -86,6 +87,9 @@ const newInscripcionCliente = async(req, res) =>{
         const pase = await getPaseById(idPase);
 
         if(pase.length === 0) return res.status(400).json({message: "No existe un pase con ese ID"});
+        const inscripciones = await getInscripcionesAltaByCliente(idCliente);
+
+        if(inscripciones.length > 0) return res.status(400).json({message: "El cliente ya tiene una inscripcion en Alta"});
         await crearInscripcion(req.body, idCliente);
         return res.status(200).json({message: "Inscripcion creada con exito"});
 

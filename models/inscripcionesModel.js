@@ -10,9 +10,17 @@ const getInscripciones = async() =>{
 
 const getInscripcionById = async(id) =>{
     const [inscripcion] = await pool.query(
-        `SELECT idProfesor, idCliente, idPase, date_format(diaInicio, '%d-%m-%Y') AS inicio ,date_format(diaFin, '%d-%m-%Y') AS fin, precio, estado
+        `SELECT 
+	        inscripciones.idProfesor,
+            inscripciones.idCliente,
+            pases.nombre AS pase,
+            date_format(inscripciones.diaInicio, '%d-%m-%Y') AS inicio,
+            date_format(inscripciones.diaFin, '%d-%m-%Y') AS fin, 
+            inscripciones.precio,
+            inscripciones.estado
         FROM inscripciones
-        WHERE idInscripcion = ?`,
+        JOIN pases ON inscripciones.idPase = pases.idPase
+        WHERE inscripciones.idInscripcion = ?`,
         [id]
     );
     return inscripcion;
@@ -20,9 +28,34 @@ const getInscripcionById = async(id) =>{
 
 const getInscripcionesByCliente = async(id) =>{
     const [inscripciones] = await pool.query(
-        `SELECT idInscripcion, idProfesor, idPase, date_format(diaInicio, '%d-%m-%Y') AS inicio ,date_format(diaFin, '%d-%m-%Y') AS fin, precio, estado
+        `SELECT 
+	        inscripciones.idInscripcion,
+            inscripciones.idProfesor,
+            pases.nombre AS pase,
+            date_format(inscripciones.diaInicio, '%d-%m-%Y') AS inicio,
+            date_format(inscripciones.diaFin, '%d-%m-%Y') AS fin, 
+            inscripciones.precio,
+            inscripciones.estado
         FROM inscripciones
-        WHERE idCliente = ?`,
+        JOIN pases ON inscripciones.idPase = pases.idPase
+        WHERE inscripciones.idCliente = ?`,
+        [id]
+    );
+    return inscripciones;
+}
+
+const getInscripcionesAltaByCliente = async(id) =>{
+    const [inscripciones] = await pool.query(
+        `SELECT 
+	        inscripciones.idInscripcion,
+            inscripciones.idProfesor,
+            pases.nombre AS pase,
+            date_format(inscripciones.diaInicio, '%d-%m-%Y') AS inicio,
+            date_format(inscripciones.diaFin, '%d-%m-%Y') AS fin, 
+            inscripciones.precio
+        FROM inscripciones
+        JOIN pases ON inscripciones.idPase = pases.idPase
+        WHERE inscripciones.idCliente = ? AND inscripciones.estado = 'A'`,
         [id]
     );
     return inscripciones;
@@ -41,15 +74,14 @@ const getInscripcionByCliente = async(idCliente, idInscripcion) =>{
 const crearInscripcion =  async(datos, idCliente) =>{
     await pool.query(
         `INSERT INTO inscripciones
-        (idProfesor, idCliente, idPase, date_format(diaInicio, '%d-%m-%Y') AS inicio ,date_format(diaFin, '%d-%m-%Y') AS fin, precio, estado)
-        VALUES (?, ?, ?, ?, ?, ?, ?)`,
+        (idProfesor, idCliente, idPase, date_format(diaInicio, '%Y-%m-%d') AS inicio ,date_format(diaFin, '%Y-%m-%d') AS fin, precio, estado)
+        VALUES (?, ?, ?, ?, ?, ?, 'A')`,
         [datos.idProfesor,
         idCliente,
         datos.idPase,
         datos.diaInicio,
         datos.diaFin,
-        datos.precio,
-        datos.estado    
+        datos.precio   
         ]
     );
     return;
@@ -113,6 +145,7 @@ module.exports = {
     getInscripciones,
     getInscripcionById,
     getInscripcionesByCliente,
+    getInscripcionesAltaByCliente,
     getInscripcionByCliente,
     crearInscripcion,
     updateInscripcion,

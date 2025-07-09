@@ -2,7 +2,7 @@ const pool = require('../config/db.js');
 
 const getPases = async() =>{
     const [pases] = await pool.query(
-        `SELECT nombre, time_format(horaInicio, '%H:%i') AS inicio, time_format(horaFin, '%H:%i') AS fin, precio, estado
+        `SELECT idPase, nombre, time_format(horaInicio, '%H:%i') AS inicio, time_format(horaFin, '%H:%i') AS fin, precio, estado
         FROM pases`
     );
     return pases;
