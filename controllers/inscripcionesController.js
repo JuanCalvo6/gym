@@ -40,12 +40,21 @@ const obtenerInscripcion = async(req, res) =>{
 
 const listarInscripcionesCliente = async(req, res) =>{
     const id = parseInt(req.params.id, 10);
+    const {incluirBajas} = req.query;
+    const bajas = incluirBajas === 'true';
+    console.log(bajas);
 
     try {
         const cliente = await getClienteById(id);
 
         if(cliente.length === 0) return res.status(400).json({message: "No existe un cliente con ese ID"});
-        const inscripciones = await getInscripcionesByCliente(id);
+
+        let inscripciones;
+        if(bajas){
+            inscripciones = await getInscripcionesByCliente(id);
+        }else{
+            inscripciones = await getInscripcionesAltaByCliente(id);
+        }
 
         if(inscripciones.length === 0) return res.status(400).json({message: "El cliente no tiene inscripciones"});
         return res.send(inscripciones);
