@@ -55,7 +55,8 @@ const getInscripcionesAltaByCliente = async(id) =>{
             pases.nombre AS pase,
             inscripciones.diaInicio AS inicio,
             inscripciones.diaFin AS fin, 
-            inscripciones.precio
+            inscripciones.precio,
+            inscripciones.estado
         FROM inscripciones
         JOIN pases ON inscripciones.idPase = pases.idPase
         WHERE inscripciones.idCliente = ? AND inscripciones.estado = 'A'`,

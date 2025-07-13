@@ -2,7 +2,7 @@ const pool = require('../config/db.js');
 
 const getAsistencias = async() =>{
     const [asistencias] = await pool.query(
-        `SELECT idAsistencia, idCliente, date_format(fecha, '%H:%i %d-%m-%Y') AS Asistencia
+        `SELECT idAsistencia, idCliente, fecha
         FROM asistencias
         ORDER BY idCliente`
     );
@@ -11,7 +11,7 @@ const getAsistencias = async() =>{
 
 const getAsistenciaById = async(id) =>{
     const [asistencia] = await pool.query(
-        `SELECT idAsistencia, idCliente, date_format(fecha, '%H:%i %d-%m-%Y') AS Asistencia
+        `SELECT idAsistencia, idCliente, fecha
         FROM asistencias
         WHERE idAsistencia = ?`,
         [id]
@@ -21,7 +21,7 @@ const getAsistenciaById = async(id) =>{
 
 const getAsistenciasByCliente = async(id) =>{
     const [asistencias] = await pool.query(
-        `SELECT idAsistencia, date_format(fecha, '%H:%i %d-%m-%Y') AS Asistencia
+        `SELECT idAsistencia, fecha
         FROM asistencias
         WHERE idCliente = ?`,
         [id]
@@ -31,7 +31,7 @@ const getAsistenciasByCliente = async(id) =>{
 
 const getAsistenciaByCliente = async(id, idAsistencia) =>{
     const [asistencia] = await pool.query(
-        `SELECT idAsistencia, date_format(fecha, '%H:%i %d-%m-%Y') AS Asistencia
+        `SELECT idAsistencia, fecha
         FROM asistencias
         WHERE idCliente = ? AND idAsistencia = ?`,
         [id, idAsistencia]

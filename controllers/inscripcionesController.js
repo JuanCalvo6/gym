@@ -42,7 +42,6 @@ const listarInscripcionesCliente = async(req, res) =>{
     const id = parseInt(req.params.id, 10);
     const {incluirBajas} = req.query;
     const bajas = incluirBajas === 'true';
-    console.log(bajas);
 
     try {
         const cliente = await getClienteById(id);
@@ -137,6 +136,9 @@ const darAltaInscripcion = async(req, res) =>{
 
         if(inscripcion.length === 0) return res.status(400).json({message: "No existe una inscripcion con ese ID"});
         if(inscripcion[0].estado === 'A') return res.status(400).json({message: "La inscripcion ya se encuentra dada de Alta"});
+
+        const inscripciones = await getInscripcionesAltaByCliente(id);
+        if(inscripciones.length > 0) return res.status(400).json({message: "Ya existe una inscripcion de Alta"})
 
         await darAlta(id);
         return res.status(200).json({message: "Inscripcion dada de Alta con exito"});
