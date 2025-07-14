@@ -52,7 +52,7 @@ const nuevaRutina = async(datos, idCliente) =>{
     await pool.query(
         `INSERT INTO rutinas
         (idCliente, nombre, observaciones, estado)
-        VALUES (?, ?, ?, ?)`,
+        VALUES (?, ?, ?, 'A')`,
         [idCliente, 
         datos.nombre,
         datos.observaciones,
