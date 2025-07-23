@@ -1,15 +1,15 @@
 function validarDatosRutina (datos){
-    const errores = [];
+    console.log(datos)
+    const errores = {};
 
-    if(!datos.nombre )
-        errores.push("El nombre de la rutina es obligatorio");
-
+    if(!datos.nombre || datos.nombre === ''){
+        errores.nombre = "El nombre de la rutina es obligatorio";
+        return errores;
+    }
+        
     if(!/^[A-Za-zÁÉÍÓÚáéíóúÑñ\s]+$/.test(datos.nombre))
-        errores.push("El nombre de la rutina solo debe poseer caracteres alfabéticos");
-
-    if (!['A', 'B'].includes(datos.estado)) 
-        errores.push('El estado debe ser A (activo) o B (baja).');
-
+        errores.nombre ="El nombre de la rutina solo debe poseer caracteres alfabéticos";
+    
     return errores;
 }
 

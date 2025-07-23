@@ -91,6 +91,7 @@ const newRutinaCliente = async(req, res) =>{
 const actualizarRutina = async(req, res) =>{
     const idRutina = parseInt(req.params.id, 10);
     const {nombre} = req.body;
+    console.log(nombre);
 
     try {
         const rutina = await getRutinaById(idRutina);
@@ -102,12 +103,11 @@ const actualizarRutina = async(req, res) =>{
             const conflicto = isMatch.some(match => match.idRutina !== idRutina)
             if(conflicto) return res.status(400).json({message: "Ya existe una rutina con ese nombre"});
         }
-
         await updateRutina(req.body, idRutina, rutina[0].idCliente);
         return res.status(200).json({message: "Rutina modificada con exito"});
         
     } catch (error) {
-        return res.status(400).json({message: error.message});
+        return res.status(400).json({message: error});
     }
 }
 
