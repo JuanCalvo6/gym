@@ -1,6 +1,7 @@
 const { getClienteById } = require('../models/clientesModel.js');
 const { getRutinas,
         getRutinasByCliente,
+        getRutinasAltaByCliente,
         getRutinaById,
         getRutinaByCliente,
         nuevaRutina,
@@ -22,15 +23,23 @@ const listarRutinas = async(req, res) =>{
 
 const listarRutinasCliente = async(req, res) =>{
     const idCliente = parseInt(req.params.id, 10);
+    const {bajas} = req.query;
+    const incluirBajas = bajas === 'true';
 
     try {
         const cliente = await getClienteById(idCliente);
 
         if(cliente.length === 0) return res.status(400).json({message: "No existe un cliente con ese ID"});
-        const rutinas = await getRutinasByCliente(idCliente);
-
-        if(rutinas.length === 0) return res.status(400).json({message: "El cliente no tiene rutinas"});
-        return res.send(rutinas);
+        
+        if(incluirBajas){
+            const rutinas = await getRutinasByCliente(idCliente);
+            if(rutinas.length === 0) return res.status(400).json({message: "El cliente no tiene rutinas"});
+            return res.send(rutinas);
+        }else{
+            const rutinas =  await getRutinasAltaByCliente(idCliente);
+            if(rutinas.length === 0) return res.status(400).json({message: "El cliente no tiene rutinas de Alta"});
+            return res.send(rutinas);
+        }
         
     } catch (error) {
         return res.status(400).json({message: error.message});

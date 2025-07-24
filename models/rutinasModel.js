@@ -18,6 +18,16 @@ const getRutinasByCliente = async(idCliente) =>{
     return rutinas;
 }
 
+const getRutinasAltaByCliente = async(idCliente) =>{
+    const [rutinas] = await pool.query(
+        `SELECT idRutina, nombre, observaciones, estado
+        FROM rutinas
+        WHERE idCliente = ? AND estado = 'A'`,
+        [idCliente]
+    );
+    return rutinas;
+}
+
 const getRutinaById = async(idRutina) =>{
     const [rutina] = await pool.query(
         `SELECT idCliente, nombre, observaciones, estado
@@ -112,6 +122,7 @@ const deleteRutina = async(idRutina) =>{
 module.exports = {
     getRutinas,
     getRutinasByCliente,
+    getRutinasAltaByCliente,
     getRutinaById,
     getRutinaByCliente,
     nuevaRutina,
