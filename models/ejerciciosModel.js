@@ -2,7 +2,7 @@ const pool = require('../config/db.js');
 
 const getEjercicios = async()=>{
     const [ejercicios] = await pool.query(
-        `SELECT  nombre
+        `SELECT  idEjercicio, nombre
         FROM ejercicios`
     );
 

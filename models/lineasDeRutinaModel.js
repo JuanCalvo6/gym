@@ -10,7 +10,7 @@ const getLineas = async() =>{
 
 const getlineasDeRutina = async(idRutina) =>{
     const [lineasDeRutina] = await pool.query(
-        `SELECT idLineaDeRutina,idCliente, ejercicios.nombre, repeticiones, series, descanso
+        `SELECT idLineaDeRutina,idCliente, ejercicios.idEjercicio, ejercicios.nombre, repeticiones, series, descanso
         FROM lineasDeRutina
         JOIN ejercicios ON lineasDeRutina.idEjercicio = ejercicios.idEjercicio
         WHERE idRutina = ?`,
