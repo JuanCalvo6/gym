@@ -54,8 +54,8 @@ const newProfesor = async(req, res) =>{
 
 const updateProfesor = async(req, res) =>{
     const id = parseInt(req.params.id, 10);
-    const {contraseña, dni, usuario} = req.body;
-    
+    const {dni, usuario} = req.body;
+    console.log(req.body);
     try {
         const isMatchId = await getProfesorById(id);
         if(isMatchId.length === 0) return res.status(409).json({message: "No existe un profesor con ese ID"});
@@ -65,9 +65,6 @@ const updateProfesor = async(req, res) =>{
             const conflicto = isMatchDniUsuario.some(match => match.idProfesor !== id);
             if(conflicto) return res.status(409).json({message: "Ya existe un profesor con ese dni o usuario"});
         }
-
-        const contraseñaHash = await bcrypt.hash(contraseña, 10);
-        req.body.contraseña = contraseñaHash;
 
         await modificarProfesor(req.body, id);
         return res.status(201).json({message: "Profesor modificado con exito"});

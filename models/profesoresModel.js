@@ -2,7 +2,7 @@ const pool = require('../config/db.js');
 
 const getProfesores = async() =>{
     const [profesores] = await pool.query(
-        `SELECT nombres, apellidos, dni, telefono, direccion, mail, estado
+        `SELECT idProfesor, nombres, apellidos, dni, telefono, direccion, mail, estado, usuario
         FROM profesores`
     );
     return profesores;
@@ -32,7 +32,7 @@ const crearProfesor = async(datos) =>{
     const [profesor] = await pool.query(
         `INSERT INTO profesores
         (nombres, apellidos, dni, telefono, direccion, mail, usuario, contraseña, estado)
-        VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?)`,
+        VALUES(?, ?, ?, ?, ?, ?, ?, ?, 'A')`,
         [datos.nombres, 
         datos.apellidos, 
         datos.dni, 
@@ -40,8 +40,7 @@ const crearProfesor = async(datos) =>{
         datos.direccion, 
         datos.mail, 
         datos.usuario, 
-        datos.contraseña, 
-        datos.estado]
+        datos.contraseña]
     )
     return;
 }
@@ -56,9 +55,7 @@ const modificarProfesor = async(datos,id) =>{
             telefono = ?,
             direccion = ?,
             mail = ?,
-            usuario = ?,
-            contraseña = ?,
-            estado = ?
+            usuario = ?
         WHERE idProfesor = ?`,
         [datos.nombres, 
         datos.apellidos, 
@@ -67,8 +64,6 @@ const modificarProfesor = async(datos,id) =>{
         datos.direccion, 
         datos.mail, 
         datos.usuario, 
-        datos.contraseña, 
-        datos.estado,
         id]
     )
     return;

@@ -27,11 +27,7 @@ function validarDatosProfesor(datos){
 
     if(!datos.contraseña)
         errores.push('La contraseña es obligatorio.');
-
-    if (!['A', 'B'].includes(datos.estado)) 
-        errores.push('El estado debe ser A (activo) o B (baja).');
-
-
+    
     return errores;
 }   
 

@@ -20,7 +20,7 @@ router.get('/profesores/:id', obtenerProfesor);
 
 router.post('/profesores',validarProfesor, newProfesor);
 
-router.put('/profesores/:id',validarProfesor, updateProfesor);
+router.put('/profesores/:id', updateProfesor);
 
 router.patch('/profesores/:id/baja', darBajaProfesor);
 router.patch('/profesores/:id/alta', darAltaProfesor);
