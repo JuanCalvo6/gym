@@ -2,7 +2,7 @@ const pool = require('../config/db.js');
 
 const getPases = async() =>{
     const [pases] = await pool.query(
-        `SELECT idPase, nombre, time_format(horaInicio, '%H:%i') AS inicio, time_format(horaFin, '%H:%i') AS fin, precio, estado
+        `SELECT idPase, nombre, horaInicio, horaFin, precio, estado
         FROM pases`
     );
     return pases;
@@ -10,7 +10,7 @@ const getPases = async() =>{
 
 const getPaseById = async(id) =>{
     const [pase] = await pool.query(
-        `SELECT nombre, time_format(horaInicio, '%H:%i') AS inicio, time_format(horaFin, '%H:%i') AS fin, precio, estado
+        `SELECT nombre, horaInicio, horaFin, precio, estado
         FROM pases
         WHERE idPase = ?`,
         [id]
@@ -20,7 +20,7 @@ const getPaseById = async(id) =>{
 
 const getPaseByNombre = async(nombre) =>{
     const [pase] = await pool.query(
-        `SELECT idPase,nombre, time_format(horaInicio, '%H:%i') AS inicio, time_format(horaFin, '%H:%i') AS fin, precio, estado
+        `SELECT idPase,nombre, horaInicio, horaFin, precio, estado
         FROM pases
         WHERE nombre = ?`,
         [nombre]
@@ -32,12 +32,11 @@ const crearPase = async(datos) => {
     await pool.query(
         `INSERT INTO pases
         (nombre, horaInicio, horaFin, precio, estado)
-        VALUES (?, ?, ?, ?, ?)`,
+        VALUES (?, ?, ?, ?, 'A')`,
         [datos.nombre,
         datos.horaInicio,
         datos.horaFin,
-        datos.precio,
-        datos.estado]
+        datos.precio]
     );
     return;
 }
@@ -49,14 +48,12 @@ const modificarPase = async(datos, id) =>{
             nombre = ?,
             horaInicio = ?,
             horaFIn = ?,
-            precio = ?,
-            estado = ?
+            precio = ?
         WHERE idPase = ? `,
         [datos.nombre,
         datos.horaInicio,
         datos.horaFin,
         datos.precio,
-        datos.estado,
         id]
     );
     return;
