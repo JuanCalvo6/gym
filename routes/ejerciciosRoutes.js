@@ -4,6 +4,7 @@ const router = express.Router();
 const { listarEjercicios,
         obtenerEjercicio,
         newEjercicio,
+        modificarEjercicio,
         darBajaEjercicio,
         darAltaEjercicio,
         deleteEjercicio} =  require('../controllers/ejerciciosController.js');
@@ -17,6 +18,8 @@ router.get('/ejercicios', listarEjercicios);
 router.get('/ejercicios/:id', obtenerEjercicio);
 
 router.post('/ejercicios', newEjercicio);
+
+router.put('/ejercicios/:id', modificarEjercicio)
 
 router.patch('/ejercicios/:id/baja', darBajaEjercicio);
 router.patch('/ejercicios/:id/alta', darAltaEjercicio);

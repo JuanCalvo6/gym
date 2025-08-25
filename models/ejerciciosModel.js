@@ -2,8 +2,9 @@ const pool = require('../config/db.js');
 
 const getEjercicios = async()=>{
     const [ejercicios] = await pool.query(
-        `SELECT  idEjercicio, nombre
-        FROM ejercicios`
+        `SELECT  idEjercicio, nombre, estado
+        FROM ejercicios
+        ORDER BY nombre`
     );
 
     return ejercicios;
@@ -35,6 +36,16 @@ const nuevoEjercicio = async(nombre) =>{
         (nombre, estado)
         VALUES(?, 'A')`,
         [nombre]
+    );
+    return;
+}
+
+const updateEjercicio = async(ejercicio, id) =>{
+    await pool.query(
+        `UPDATE ejercicios 
+         SET nombre =  ?
+         WHERE idEjercicio = ?`,
+         [ejercicio.nombre, id]
     );
     return;
 }
@@ -74,6 +85,7 @@ module.exports = {
     getEjercicioById,
     getEjercicioByNombre,
     nuevoEjercicio,
+    updateEjercicio,
     darBaja,
     darAlta,
     eliminarEjercicio

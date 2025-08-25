@@ -2,6 +2,7 @@ const { getEjercicios,
         getEjercicioById,
         getEjercicioByNombre,
         nuevoEjercicio,
+        updateEjercicio,
         darBaja,
         darAlta,
         eliminarEjercicio} = require('../models/ejerciciosModel.js');
@@ -45,6 +46,29 @@ const newEjercicio = async(req, res) =>{
     } catch (error) {
         return res.status(400).json({message: error.message});
     }
+}
+
+const modificarEjercicio = async(req, res) =>{
+    const {nombre} = req.body;
+    const id = parseInt(req.params.id);
+
+    try {
+        const ejercicio = await getEjercicioById(id);
+
+        if(ejercicio.length === 0) return res.status(400).json({message: "No hay un ejercicio con ese ID"});
+        const isMatchNombre = await getEjercicioByNombre(nombre);
+
+        if(isMatchNombre.length > 0){
+            const conflicto = isMatchNombre.some(match => match.idEjercicio !== id);
+            if(conflicto) return res.status(409).json({message: "Ya existe un ejercicio con ese nombre"});
+        }
+        await updateEjercicio(req.body, id);
+        return res.status(200).json({message: "Ejercicio modificado con exito"})
+
+    } catch (error) {
+        return res.status(400).json({message: error.message});
+    }
+
 }
 
 const darBajaEjercicio = async(req, res) =>{
@@ -101,6 +125,7 @@ module.exports = {
     listarEjercicios,
     obtenerEjercicio,
     newEjercicio,
+    modificarEjercicio,
     darBajaEjercicio,
     darAltaEjercicio,
     deleteEjercicio
