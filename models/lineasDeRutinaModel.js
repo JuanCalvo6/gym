@@ -1,6 +1,6 @@
 const pool =  require('../config/db.js');
 
-const getLineas = async() =>{
+const findAllLineasDeRutina = async() =>{
     const [lineasDeRutina] = await pool.query(
         `SELECT idLineaDeRutina,idCliente, idEjercicio, idRutina, repeticiones, series, descanso
         FROM lineasDeRutina`
@@ -8,7 +8,7 @@ const getLineas = async() =>{
     return lineasDeRutina;
 }
 
-const getlineasDeRutina = async(idRutina) =>{
+const findLineasDeRutinaByIdRutina = async(idRutina) =>{
     const [lineasDeRutina] = await pool.query(
         `SELECT idLineaDeRutina,idCliente, ejercicios.idEjercicio, ejercicios.nombre, repeticiones, series, descanso
         FROM lineasDeRutina
@@ -19,7 +19,7 @@ const getlineasDeRutina = async(idRutina) =>{
     return lineasDeRutina;
 }
 
-const getLineaById = async(idLinea) =>{
+const findLineaDeRutinaById = async(idLinea) =>{
     const [lineaDeRutina] = await pool.query(
         `SELECT idRutina, idCliente, idEjercicio, repeticiones, series, descanso
         FROM lineasDeRutina
@@ -29,7 +29,7 @@ const getLineaById = async(idLinea) =>{
     return lineaDeRutina;
 }
 
-const getLineaDeRutina = async(idRutina, idLinea) =>{
+const findLineaDeRutinaByIdByIdRutina = async(idRutina, idLinea) =>{
     const [lineaDeRutina] = await pool.query(
         `SELECT idCliente, idEjercicio, repeticiones, series, descanso
         FROM lineasDeRutina
@@ -39,7 +39,7 @@ const getLineaDeRutina = async(idRutina, idLinea) =>{
     return lineaDeRutina;
 }
 
-const newLineaDeRutina = async(datos, idRutina, idCliente) =>{
+const insertLineaDeRutina = async(datos, idRutina, idCliente) =>{
     await pool.query(
         `INSERT INTO lineasDeRutina
         (idEjercicio, idRutina, idCliente, repeticiones, series, descanso )
@@ -55,7 +55,7 @@ const newLineaDeRutina = async(datos, idRutina, idCliente) =>{
     return;
 }
 
-const updateLinaDeRutina = async(datos, idLinea, idRutina, idCliente) =>{
+const updateLineaDeRutinaById = async(datos, idLinea, idRutina, idCliente) =>{
     await pool.query(
         `UPDATE lineasDeRutina
         SET idEjercicio = ?,
@@ -76,7 +76,7 @@ const updateLinaDeRutina = async(datos, idLinea, idRutina, idCliente) =>{
     return;
 }
 
-const deleteLineaDeRutina = async(idLinea) =>{
+const deleteLineaDeRutinaById = async(idLinea) =>{
     await pool.query(
         `DELETE
         FROM lineasDeRutina
@@ -87,11 +87,11 @@ const deleteLineaDeRutina = async(idLinea) =>{
 }
 
 module.exports = {
-    getLineas,
-    getlineasDeRutina,
-    getLineaById,
-    getLineaDeRutina,
-    newLineaDeRutina,
-    updateLinaDeRutina,
-    deleteLineaDeRutina
+    findAllLineasDeRutina,
+    findLineasDeRutinaByIdRutina,
+    findLineaDeRutinaById,
+    findLineaDeRutinaByIdByIdRutina,
+    insertLineaDeRutina,
+    updateLineaDeRutinaById,
+    deleteLineaDeRutinaById
 };

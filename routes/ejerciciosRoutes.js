@@ -3,11 +3,11 @@ const router = express.Router();
 
 const { listarEjercicios,
         obtenerEjercicio,
-        newEjercicio,
+        nuevoEjercicio,
         modificarEjercicio,
         darBajaEjercicio,
         darAltaEjercicio,
-        deleteEjercicio} =  require('../controllers/ejerciciosController.js');
+        eliminarEjercicio} =  require('../controllers/ejerciciosController.js');
 const { validarToken } = require('../middlewares/validarToken.js');
 const { validarRol } = require('../middlewares/validarRol.js');
 
@@ -17,14 +17,14 @@ router.use(validarToken);
 router.get('/ejercicios', listarEjercicios);
 router.get('/ejercicios/:id', obtenerEjercicio);
 
-router.post('/ejercicios', newEjercicio);
+router.post('/ejercicios', nuevoEjercicio);
 
 router.put('/ejercicios/:id', modificarEjercicio)
 
 router.patch('/ejercicios/:id/baja', darBajaEjercicio);
 router.patch('/ejercicios/:id/alta', darAltaEjercicio);
 
-router.delete('/ejercicios/:id', deleteEjercicio);
+router.delete('/ejercicios/:id', eliminarEjercicio);
 
 
 module.exports = router;

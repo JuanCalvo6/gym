@@ -4,14 +4,16 @@ Al crear nuevos profesores puedo asignar directamente estado = 'A', no hace falt
 
 En las validaciones puedo agregar una que vuelva todos los string a minusculas. Sino "Sentadilla" y "sentadilla" pueden ser agregados sin ver duplicidad.
 
-En los pases tambien deberia controlar que ademas de que no existan pases con el mismo nombre, no tiene logica que existan pases con
-la misma franja horaria.
+X - En los pases tambien deberia controlar que ademas de que no existan pases con el mismo nombre, no tiene logica que existan pases con
+la misma franja horaria. (Un pase para una actividad en especial? Ej. pilates)
 
 En los pases tendria que controlar que el horaInicio y HoraFin no sean iguales y que horaFin sea mayor que horaInicio.
 
 los metodos para traer uno o todos no tienen en cuenta el estado. Agregar!.
 
-Agregar a clientes que el DNI debe ser único. El documento deberia poder modificarse???
+Agregar a clientes que el DNI debe ser único. 
+
+X - El documento deberia poder modificarse??? (Error de tipeo)
 
 El dni esta mal llamado, deberia ser mas generico como ser documento.
 

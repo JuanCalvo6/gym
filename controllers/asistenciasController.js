@@ -1,15 +1,15 @@
-const { getAsistencias,
-        getAsistenciaById,
-        deleteAsistencia,
-        getAsistenciasByCliente,
-        getAsistenciaByCliente,
-        crearAsistenciaCliente
+const { findAllAsistencias,
+        findAsistenciaById,
+        deleteAsistenciaById,
+        findAllAsistenciasByIdCliente,
+        findAsistenciaByIdByIdCliente,
+        insertAsistenciaByIdCliente
 } = require('../models/asistenciasModel.js');
-const { getClienteById } = require('../models/clientesModel.js');
+const { findClienetById } = require('../models/clientesModel.js');
 
 const listarAsistencias = async(req, res) =>{
     try {
-        const asistencias =  await getAsistencias();
+        const asistencias =  await findAllAsistencias();
 
         if(asistencias.length === 0) return res.status(400).json({message: "No hay asistencias"});
         return res.send(asistencias);
@@ -23,7 +23,7 @@ const obtenerAsistencia = async(req, res) =>{
     const id = parseInt(req.params.id, 10);
 
     try {
-        const asistencia = await getAsistenciaById(id);
+        const asistencia = await findAsistenciaById(id);
         console.log(asistencia);
         if(asistencia.length === 0) return res.status(400).json({message: "No existe una asistencia con ese ID"});
 
@@ -38,10 +38,10 @@ const listarAsistenciasCliente = async(req, res) =>{
     const id = parseInt(req.params.id, 10);
 
     try {
-        const isMatch = await getClienteById(id);
+        const isMatch = await findClienetById(id);
 
         if(isMatch.length === 0) return res.status(400).json({message: "No existe un cliente con ese ID"});
-        const asistencias = await getAsistenciasByCliente(id);
+        const asistencias = await findAllAsistenciasByIdCliente(id);
 
         if(asistencias.length === 0) return res.status(400).json({message: "El cliente no tiene asistencias"});
         return res.send(asistencias);
@@ -56,10 +56,10 @@ const obtenerAsistenciaCliente = async(req,res) =>{
     const idAsistencia = parseInt(req.params.idAsistencia, 10);
 
     try {
-        const isMatch = await getClienteById(id);
+        const isMatch = await findClienetById(id);
         
         if(isMatch.length === 0) return res.status(400).json({message: "No existe un cliente con ese ID"});
-        const asistencia = await getAsistenciaByCliente(id, idAsistencia);
+        const asistencia = await findAsistenciaByIdByIdCliente(id, idAsistencia);
         
         if(asistencia.length === 0) return res.status(400).json({message: "El cliente no tiene una asistencia con ese ID"});
         return res.send(asistencia);
@@ -69,15 +69,15 @@ const obtenerAsistenciaCliente = async(req,res) =>{
     }
 }
 
-const newAsistenciaCliente = async(req, res) =>{
+const crearAsistenciaCliente = async(req, res) =>{
     const id = parseInt(req.params.id, 10);
 
     try {
-        const isMatch = await getClienteById(id);
+        const isMatch = await findClienetById(id);
 
         if(isMatch.length === 0) return res.status(400).json({message: "No existe un cliente con ese ID"});
 
-        await crearAsistenciaCliente(req.body, id);
+        await insertAsistenciaByIdCliente(req.body, id);
         return res.status(200).json({message: "Asistencia creada con exito"});
 
     } catch (error) {
@@ -89,10 +89,10 @@ const eliminarAsistencia = async(req, res) =>{
     const id = parseInt(req.params.id, 10);
 
     try {
-        const isMatch = await getAsistenciaById(id);
+        const isMatch = await findAsistenciaById(id);
 
         if(isMatch.length === 0) return res.status(400).json({message: "No existe una asistencia con ese ID"});
-        await deleteAsistencia(id);
+        await deleteAsistenciaById(id);
         return res.status(200).json({message: "Asistencia eliminada con exito"});
 
     } catch (error) {
@@ -105,6 +105,6 @@ module.exports = {
     obtenerAsistencia,
     eliminarAsistencia,
     listarAsistenciasCliente,
-    newAsistenciaCliente,
+    crearAsistenciaCliente,
     obtenerAsistenciaCliente
 }

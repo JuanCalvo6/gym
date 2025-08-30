@@ -1,6 +1,6 @@
 const pool = require('../config/db.js');
 
-const getUsuario = async(usuario) =>{
+const findUsuario = async(usuario) =>{
     const [userFound] = await pool.query(
         `SELECT idAdministrador AS id, 'none' AS nombre, usuario, contraseña, 'admin' AS tipo 
         FROM administradores 
@@ -14,4 +14,4 @@ const getUsuario = async(usuario) =>{
     return userFound;
 }
 
-module.exports = {getUsuario};
+module.exports = {findUsuario};

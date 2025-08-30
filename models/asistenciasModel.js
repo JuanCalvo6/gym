@@ -1,6 +1,6 @@
 const pool = require('../config/db.js');
 
-const getAsistencias = async() =>{
+const findAllAsistencias = async() =>{
     const [asistencias] = await pool.query(
         `SELECT idAsistencia, idCliente, fecha
         FROM asistencias
@@ -9,7 +9,7 @@ const getAsistencias = async() =>{
     return asistencias;
 }
 
-const getAsistenciaById = async(id) =>{
+const findAsistenciaById = async(id) =>{
     const [asistencia] = await pool.query(
         `SELECT idAsistencia, idCliente, fecha
         FROM asistencias
@@ -19,7 +19,7 @@ const getAsistenciaById = async(id) =>{
     return asistencia;
 }
 
-const getAsistenciasByCliente = async(id) =>{
+const findAllAsistenciasByIdCliente = async(id) =>{
     const [asistencias] = await pool.query(
         `SELECT idAsistencia, fecha
         FROM asistencias
@@ -29,7 +29,7 @@ const getAsistenciasByCliente = async(id) =>{
     return asistencias;
 }
 
-const getAsistenciaByCliente = async(id, idAsistencia) =>{
+const findAsistenciaByIdByIdCliente = async(id, idAsistencia) =>{
     const [asistencia] = await pool.query(
         `SELECT idAsistencia, fecha
         FROM asistencias
@@ -39,7 +39,7 @@ const getAsistenciaByCliente = async(id, idAsistencia) =>{
     return asistencia;
 }
 
-const crearAsistenciaCliente = async(datos, id) =>{
+const insertAsistenciaByIdCliente = async(datos, id) =>{
     await pool.query(
         `INSERT INTO asistencias
         (idCliente, fecha)
@@ -49,7 +49,7 @@ const crearAsistenciaCliente = async(datos, id) =>{
     return;
 }
 
-const deleteAsistencia = async(id) =>{
+const deleteAsistenciaById = async(id) =>{
     await pool.query(
     `DELETE
     FROM asistencias
@@ -60,10 +60,10 @@ const deleteAsistencia = async(id) =>{
 }
 
 module.exports = {
-    getAsistencias,
-    getAsistenciaById,
-    deleteAsistencia,
-    getAsistenciasByCliente,
-    getAsistenciaByCliente,
-    crearAsistenciaCliente
+    findAllAsistencias,
+    findAsistenciaById,
+    deleteAsistenciaById,
+    findAllAsistenciasByIdCliente,
+    findAsistenciaByIdByIdCliente,
+    insertAsistenciaByIdCliente
 }

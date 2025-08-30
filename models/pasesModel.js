@@ -1,6 +1,6 @@
 const pool = require('../config/db.js');
 
-const getPases = async() =>{
+const findAllPases = async() =>{
     const [pases] = await pool.query(
         `SELECT idPase, nombre, horaInicio, horaFin, precio, estado
         FROM pases`
@@ -8,7 +8,7 @@ const getPases = async() =>{
     return pases;
 }
 
-const getPaseById = async(id) =>{
+const findPaseById = async(id) =>{
     const [pase] = await pool.query(
         `SELECT nombre, horaInicio, horaFin, precio, estado
         FROM pases
@@ -18,7 +18,7 @@ const getPaseById = async(id) =>{
     return pase;
 }
 
-const getPaseByNombre = async(nombre) =>{
+const findPaseByNombre = async(nombre) =>{
     const [pase] = await pool.query(
         `SELECT idPase,nombre, horaInicio, horaFin, precio, estado
         FROM pases
@@ -28,7 +28,7 @@ const getPaseByNombre = async(nombre) =>{
     return pase;
 }
 
-const crearPase = async(datos) => {
+const insertPase = async(datos) => {
     await pool.query(
         `INSERT INTO pases
         (nombre, horaInicio, horaFin, precio, estado)
@@ -41,7 +41,7 @@ const crearPase = async(datos) => {
     return;
 }
 
-const modificarPase = async(datos, id) =>{
+const updatePaseById = async(datos, id) =>{
     await pool.query(
         `UPDATE pases
         SET
@@ -59,7 +59,7 @@ const modificarPase = async(datos, id) =>{
     return;
 }
 
-const darAlta = async(id) =>{
+const updateAltaPaseById = async(id) =>{
     await pool.query(
         `UPDATE pases
         SET estado = 'A'
@@ -69,7 +69,7 @@ const darAlta = async(id) =>{
     return;
 }
 
-const darBaja = async(id) =>{
+const updateBajaPaseById = async(id) =>{
     await pool.query(
         `UPDATE pases
         SET estado = 'B'
@@ -79,7 +79,7 @@ const darBaja = async(id) =>{
     return;
 }
 
-const eliminarPase = async(id) =>{
+const deletePaseById = async(id) =>{
     await pool.query(
         `DELETE
         FROM pases
@@ -90,12 +90,12 @@ const eliminarPase = async(id) =>{
 }
 
 module.exports = {
-    getPases,
-    getPaseById,
-    getPaseByNombre,
-    crearPase,
-    modificarPase, 
-    darAlta,
-    darBaja,
-    eliminarPase
+    findAllPases,
+    findPaseById,
+    findPaseByNombre,
+    insertPase,
+    updatePaseById, 
+    updateAltaPaseById,
+    updateBajaPaseById,
+    deletePaseById
 };

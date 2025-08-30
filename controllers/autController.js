@@ -1,14 +1,14 @@
 require('dotenv').config();
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
-const { getUsuario } = require('../models/autModel');
+const { findUsuario } = require('../models/autModel');
 const {generarToken} = require('../utils/generarToken.js')
 
 const login = async(req, res) =>{
     const {usuario, contraseña} = req.body;
 
     try {
-        const userFound = await getUsuario(usuario);
+        const userFound = await findUsuario(usuario);
 
         if(userFound.length === 0) return res.status(400).json({message: 'Datos incorrectos'});
         const contraseñaHash = userFound[0].contraseña;
@@ -47,7 +47,7 @@ const verifyToken = async(req, res) =>{
     
     jwt.verify(token, process.env.JWT_KEY, async(error, decode) =>{
         if(error) return res.status(401).json({message: "Token invalido"});
-        const userFound = await getUsuario(decode.usuario);
+        const userFound = await findUsuario(decode.usuario);
         
         if(userFound.length === 0) return res.status(401).json({message: "No autorizado, usuario no encontrado"});
         const {id, nombre, usuario: user, tipo} =  userFound[0];

@@ -1,6 +1,6 @@
 const pool = require('../config/db.js');
 
-const getAllClientes = async() =>{
+const findAllClientes = async() =>{
     const [clientes] =  await pool.query(
         `SELECT idCliente, nombres, apellidos, tipoDni, dni, huella, telefono, direccion, mail, estado
         FROM clientes
@@ -9,7 +9,7 @@ const getAllClientes = async() =>{
     return clientes;
 }
 
-const getClientes = async(cadena) =>{
+const findAllClientesByNombresByApellidos = async(cadena) =>{
     const exp = `${cadena}%`;
 
     const [clientes] =  await pool.query(
@@ -22,7 +22,7 @@ const getClientes = async(cadena) =>{
     return clientes;
 }
 
-const getAllAltaClientes = async() =>{
+const findAltaClientes = async() =>{
     const [clientes] =  await pool.query(
         `SELECT idCliente, nombres, apellidos, tipoDni, dni, huella, telefono, direccion, mail, estado
         FROM clientes
@@ -32,7 +32,7 @@ const getAllAltaClientes = async() =>{
     return clientes;
 }
 
-const getAltaClientes = async(cadena) =>{
+const findAltaClientesByNombresByApellidos = async(cadena) =>{
     const exp = `${cadena}%`;
 
     const [clientes] =  await pool.query(
@@ -45,7 +45,7 @@ const getAltaClientes = async(cadena) =>{
     return clientes;
 }
 
-const getClienteById = async(id) =>{
+const findClienetById = async(id) =>{
     const [cliente] = await pool.query(
         `SELECT nombres, apellidos, tipoDni, dni, huella, telefono, direccion, mail, estado
         FROM clientes
@@ -55,7 +55,7 @@ const getClienteById = async(id) =>{
     return cliente;
 }
 
-const crearCliente = async(datos) =>{
+const insertCliente = async(datos) =>{
     await pool.query(
         `INSERT INTO clientes
         (nombres, apellidos, tipoDni, dni, huella, telefono, direccion, mail, estado)
@@ -72,7 +72,7 @@ const crearCliente = async(datos) =>{
     return;
 }
 
-const modificarCliente = async(datos, id) =>{
+const updateClienteById = async(datos, id) =>{
     await pool.query(
         `UPDATE clientes
         SET 
@@ -100,7 +100,7 @@ const modificarCliente = async(datos, id) =>{
     return;
 }
 
-const darAlta = async(id) =>{
+const updateAltaClienteById = async(id) =>{
     await pool.query(
         `UPDATE clientes
         SET estado = 'A'
@@ -110,7 +110,7 @@ const darAlta = async(id) =>{
     return;
 }
 
-const darBaja = async(id) =>{
+const updateBajaClienteById = async(id) =>{
     await pool.query(
         `UPDATE clientes
         SET estado = 'B'
@@ -120,7 +120,7 @@ const darBaja = async(id) =>{
     return;
 }
 
-const eliminarCliente = async(id) =>{
+const deleteClienteById = async(id) =>{
     await pool.query(
         `DELETE
         FROM clientes
@@ -131,12 +131,12 @@ const eliminarCliente = async(id) =>{
 }
 
 module.exports = {
-    getAllClientes, getClientes,
-    getAllAltaClientes, getAltaClientes,
-    getClienteById,
-    crearCliente,
-    modificarCliente, 
-    darAlta, 
-    darBaja,
-    eliminarCliente
+    findAllClientes, findAllClientesByNombresByApellidos,
+    findAltaClientes, findAltaClientesByNombresByApellidos,
+    findClienetById,
+    insertCliente,
+    updateClienteById, 
+    updateAltaClienteById, 
+    updateBajaClienteById,
+    deleteClienteById
 }

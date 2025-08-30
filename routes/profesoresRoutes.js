@@ -1,11 +1,11 @@
 const express = require('express');
 const { obtenerProfesor,
         listarProfesores,
-         newProfesor, 
-         updateProfesor, 
+         nuevoProfesor, 
+         modificarProfesor, 
          darBajaProfesor, 
          darAltaProfesor, 
-         deleteProfesor } = require('../controllers/profesoresController');
+         eliminarProfesor } = require('../controllers/profesoresController');
 const { validarToken } = require('../middlewares/validarToken');
 const { validarRol} = require('../middlewares/validarRol.js');
 const validarProfesor = require('../middlewares/validarProfesor.js');
@@ -18,13 +18,13 @@ router.use(validarToken);
 router.get('/profesores', listarProfesores);
 router.get('/profesores/:id', obtenerProfesor);
 
-router.post('/profesores',validarProfesor, newProfesor);
+router.post('/profesores',validarProfesor, nuevoProfesor);
 
-router.put('/profesores/:id', updateProfesor);
+router.put('/profesores/:id', modificarProfesor);
 
 router.patch('/profesores/:id/baja', darBajaProfesor);
 router.patch('/profesores/:id/alta', darAltaProfesor);
 
-router.delete('/profesores/:id', deleteProfesor);
+router.delete('/profesores/:id', eliminarProfesor);
 
 module.exports = router;

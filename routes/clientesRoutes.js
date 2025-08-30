@@ -2,20 +2,19 @@ const express = require('express');
 const router = express.Router();
 const { listarClientes,
         obtenerCliente,
-        newCliente,
-        updateCliente,
+        crearCliente,
+        modificarCliente,
         darAltaCliente,
         darBajaCliente,
-        deleteCliente} = require('../controllers/clientesController.js');
-const { listarAsistenciasCliente,
-        newAsistenciaCliente,
+        eliminarCliente} = require('../controllers/clientesController.js');
+const { listarAsistenciasCliente,crearAsistenciaCliente,
         obtenerAsistenciaCliente} =  require('../controllers/asistenciasController.js');
 const { listarInscripcionesCliente,
         obtenerInscripcionCliente,
-        newInscripcionCliente} = require('../controllers/inscripcionesController.js');
+        crearInscripcionCliente} = require('../controllers/inscripcionesController.js');
 const { listarRutinasCliente, 
         obtenerRutinaCliente, 
-        newRutinaCliente} = require('../controllers/rutinasController.js');
+        crearRutinaCliente} = require('../controllers/rutinasController.js');
 const validarCliente = require('../middlewares/validarCliente.js');
 const validarAsistencia = require('../middlewares/validarAsistencia.js');
 const validarInscripcion = require('../middlewares/validarInscripcion.js');
@@ -35,16 +34,16 @@ router.get('/clientes/:id/inscripciones/:idInscripcion', obtenerInscripcionClien
 router.get('/clientes/:id/rutinas', listarRutinasCliente);
 router.get('/clientes/:id/rutinas/:idRutina', obtenerRutinaCliente);
 
-router.post('/clientes',validarCliente, newCliente);
-router.post('/clientes/:id/asistencias', validarAsistencia, newAsistenciaCliente);
-router.post('/clientes/:id/inscripciones',validarInscripcion, newInscripcionCliente);
-router.post('/clientes/:id/rutinas', validarRutina, newRutinaCliente);
+router.post('/clientes',validarCliente, crearCliente);
+router.post('/clientes/:id/asistencias', validarAsistencia, crearAsistenciaCliente);
+router.post('/clientes/:id/inscripciones',validarInscripcion, crearInscripcionCliente);
+router.post('/clientes/:id/rutinas', validarRutina, crearRutinaCliente);
 
-router.put('/clientes/:id',validarCliente, updateCliente);
+router.put('/clientes/:id',validarCliente, modificarCliente);
 
 router.patch('/clientes/:id/alta', darAltaCliente);
 router.patch('/clientes/:id/baja', darBajaCliente);
 
-router.delete('/clientes/:id', deleteCliente);
+router.delete('/clientes/:id', eliminarCliente);
 
 module.exports = router;

@@ -1,6 +1,6 @@
 const pool = require('../config/db.js');
 
-const getProfesores = async() =>{
+const findAllProfesores = async() =>{
     const [profesores] = await pool.query(
         `SELECT idProfesor, nombres, apellidos, dni, telefono, direccion, mail, estado, usuario
         FROM profesores`
@@ -8,7 +8,7 @@ const getProfesores = async() =>{
     return profesores;
 }
 
-const getProfesorById = async(id) =>{
+const findProfesorById = async(id) =>{
     const [profesor] = await pool.query(
         `SELECT nombres, apellidos, dni, telefono, direccion, mail, estado
         FROM profesores
@@ -18,7 +18,7 @@ const getProfesorById = async(id) =>{
     return profesor;
 }
 
-const getProfesorByDniUsuario = async(dni, usuario) =>{
+const findProfesorByDniByUsuario = async(dni, usuario) =>{
     const [profesor] = await pool.query(
         `SELECT idProfesor
         FROM profesores
@@ -28,7 +28,7 @@ const getProfesorByDniUsuario = async(dni, usuario) =>{
     return profesor;
 }
 
-const crearProfesor = async(datos) =>{
+const insertProfesor = async(datos) =>{
     const [profesor] = await pool.query(
         `INSERT INTO profesores
         (nombres, apellidos, dni, telefono, direccion, mail, usuario, contraseña, estado)
@@ -45,7 +45,7 @@ const crearProfesor = async(datos) =>{
     return;
 }
 
-const modificarProfesor = async(datos,id) =>{
+const updateProfesorById = async(datos,id) =>{
     await pool.query(
         `UPDATE profesores
         SET 
@@ -69,7 +69,7 @@ const modificarProfesor = async(datos,id) =>{
     return;
 }
 
-const darBaja = async(id) =>{
+const updateBajaProfesorById = async(id) =>{
     await pool.query(
         `UPDATE profesores
         SET estado = 'B'
@@ -79,7 +79,7 @@ const darBaja = async(id) =>{
     return;
 }
 
-const darAlta = async(id) =>{
+const updateAltaProfesorById = async(id) =>{
     await pool.query(
         `UPDATE profesores
         SET estado = 'A'
@@ -89,7 +89,7 @@ const darAlta = async(id) =>{
     return;
 }
 
-const eliminarProfesor = async(id) =>{
+const deleteProfesorById = async(id) =>{
     await pool.query(
         `DELETE
         FROM profesores
@@ -100,12 +100,12 @@ const eliminarProfesor = async(id) =>{
 }
 
 module.exports = {
-    getProfesores,
-    getProfesorById,
-    getProfesorByDniUsuario,
-    crearProfesor,
-    modificarProfesor,
-    darBaja,
-    darAlta,
-    eliminarProfesor
+    findAllProfesores,
+    findProfesorById,
+    findProfesorByDniByUsuario,
+    insertProfesor,
+    updateProfesorById,
+    updateBajaProfesorById,
+    updateAltaProfesorById,
+    deleteProfesorById
 }

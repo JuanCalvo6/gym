@@ -1,19 +1,19 @@
-const { getClienteById } = require('../models/clientesModel.js');
-const {getProfesorById} = require('../models/profesoresModel.js');
-const {getPaseById} = require('../models/pasesModel.js');
-const { getInscripciones,
-        getInscripcionById,
-        getInscripcionesByCliente,
-        getInscripcionesAltaByCliente,
-        getInscripcionByCliente,
-        crearInscripcion,
-        updateInscripcion,
-        darAlta, darBaja,
-        deleteInscripcion} = require('../models/inscripcionesModel.js');
+const { findClienetById } = require('../models/clientesModel.js');
+const {findProfesorById} = require('../models/profesoresModel.js');
+const {findPaseById} = require('../models/pasesModel.js');
+const { findAllInscripciones ,
+        findInscripcionById,
+        findInscripcionesByIdCliente,
+        findAltaInscripcionesByIdCliente,
+        findInscripcionByIdByIdCliente,
+        insertInscripcion,
+        updateInscripcionById,
+        updateAltaInscripcionById, updateBajaInscripcionById,
+        deleteInscripcionById} = require('../models/inscripcionesModel.js');
 
 const listarInscripciones = async(req, res) =>{
     try {
-        const inscripciones = await getInscripciones();
+        const inscripciones = await findAllInscripciones ();
 
         if(inscripciones.length === 0) return res.status(400).json({message: "No hay inscripciones"});
 
@@ -28,7 +28,7 @@ const obtenerInscripcion = async(req, res) =>{
     const id = parseInt(req.params.id, 10);
 
     try {
-        const inscripcion = await getInscripcionById(id);
+        const inscripcion = await findInscripcionById(id);
 
         if(inscripcion.length === 0) return res.status(400).json({message: "No existe una inscripcion con ese ID"});
         return res.send(inscripcion);
@@ -44,15 +44,15 @@ const listarInscripcionesCliente = async(req, res) =>{
     const bajas = incluirBajas === 'true';
 
     try {
-        const cliente = await getClienteById(id);
+        const cliente = await findClienetById(id);
 
         if(cliente.length === 0) return res.status(400).json({message: "No existe un cliente con ese ID"});
 
         let inscripciones;
         if(bajas){
-            inscripciones = await getInscripcionesByCliente(id);
+            inscripciones = await findInscripcionesByIdCliente(id);
         }else{
-            inscripciones = await getInscripcionesAltaByCliente(id);
+            inscripciones = await findAltaInscripcionesByIdCliente(id);
         }
 
         if(inscripciones.length === 0) return res.status(400).json({message: "El cliente no tiene inscripciones"});
@@ -68,10 +68,10 @@ const obtenerInscripcionCliente = async(req, res) =>{
     const idInscripcion = parseInt(req.params.idInscripcion, 10);
 
     try {
-        const cliente = await getClienteById(idCliente);
+        const cliente = await findClienetById(idCliente);
 
         if(cliente.length === 0) return res.status(400).json({message: "No existe un cliente con ese ID"});
-        const inscripcion = await getInscripcionByCliente(idCliente, idInscripcion);
+        const inscripcion = await findInscripcionByIdByIdCliente(idCliente, idInscripcion);
 
         if(inscripcion.length === 0) return res.status(400).json({message: "El cliente no tiene una inscripcion con ese ID"});
         return res.send(inscripcion);
@@ -81,24 +81,24 @@ const obtenerInscripcionCliente = async(req, res) =>{
     }
 }
 
-const newInscripcionCliente = async(req, res) =>{
+const crearInscripcionCliente = async(req, res) =>{
     const idCliente = parseInt(req.params.id, 10);
     const {idProfesor, idPase} = req.body;
     
     try {
-        const cliente = await getClienteById(idCliente);
+        const cliente = await findClienetById(idCliente);
 
         if(cliente.length === 0) return res.status(400).json({message: "No existe un cliente con ese ID"});
-        const profesor = await getProfesorById(idProfesor);
+        const profesor = await findProfesorById(idProfesor);
 
         if(profesor.length === 0) return res.status(400).json({message: "No existe un profesor con ese ID"});
-        const pase = await getPaseById(idPase);
+        const pase = await findPaseById(idPase);
 
         if(pase.length === 0) return res.status(400).json({message: "No existe un pase con ese ID"});
-        const inscripciones = await getInscripcionesAltaByCliente(idCliente);
+        const inscripciones = await findAltaInscripcionesByIdCliente(idCliente);
 
         if(inscripciones.length > 0) return res.status(400).json({message: "El cliente ya tiene una inscripcion en Alta"});
-        await crearInscripcion(req.body, idCliente);
+        await insertInscripcion(req.body, idCliente);
         return res.status(200).json({message: "Inscripcion creada con exito"});
 
     } catch (error) {
@@ -111,16 +111,16 @@ const modificarInscripcion = async(req, res) =>{
     const {idProfesor, idPase} = req.body;
     
     try {
-        const inscripcion = await getInscripcionById(idInscripcion);
+        const inscripcion = await findInscripcionById(idInscripcion);
 
         if(inscripcion.length === 0) return res.status(400).json({message: "No existe un inscripcion con ese ID"});
-        const profesor = await getProfesorById(idProfesor);
+        const profesor = await findProfesorById(idProfesor);
 
         if(profesor.length === 0) return res.status(400).json({message: "No existe un profesor con ese ID"});
-        const pase = await getPaseById(idPase);
+        const pase = await findPaseById(idPase);
 
         if(pase.length === 0) return res.status(400).json({message: "No existe un pase con ese ID"});
-        await updateInscripcion(req.body, idInscripcion, inscripcion[0].idCliente);
+        await updateInscripcionById(req.body, idInscripcion, inscripcion[0].idCliente);
         return res.status(200).json({message: "Inscripcion modificada con exito"});
 
     } catch (error) {
@@ -132,15 +132,15 @@ const darAltaInscripcion = async(req, res) =>{
     const id = parseInt(req.params.id, 10);
 
     try {
-        const inscripcion = await getInscripcionById(id);
+        const inscripcion = await findInscripcionById(id);
 
         if(inscripcion.length === 0) return res.status(400).json({message: "No existe una inscripcion con ese ID"});
         if(inscripcion[0].estado === 'A') return res.status(400).json({message: "La inscripcion ya se encuentra dada de Alta"});
 
-        const inscripciones = await getInscripcionesAltaByCliente(id);
+        const inscripciones = await findAltaInscripcionesByIdCliente(id);
         if(inscripciones.length > 0) return res.status(400).json({message: "Ya existe una inscripcion de Alta"})
 
-        await darAlta(id);
+        await updateAltaInscripcionById(id);
         return res.status(200).json({message: "Inscripcion dada de Alta con exito"});
         
     } catch (error) {
@@ -152,12 +152,12 @@ const darBajaInscripcion = async(req, res) =>{
     const id = parseInt(req.params.id, 10);
 
     try {
-        const inscripcion = await getInscripcionById(id);
+        const inscripcion = await findInscripcionById(id);
 
         if(inscripcion.length === 0) return res.status(400).json({message: "No existe una inscripcion con ese ID"});
         if(inscripcion[0].estado === 'B') return res.status(400).json({message: "La inscripcion ya se encuentra dada de Baja"});
 
-        await darBaja(id);
+        await updateBajaInscripcionById(id);
         return res.status(200).json({message: "Inscripcion dada de Baja con exito"});
         
     } catch (error) {
@@ -168,10 +168,10 @@ const darBajaInscripcion = async(req, res) =>{
 const eliminarInscripcion = async(req, res) =>{
     const id = parseInt(req.params.id, 10);
     try {
-        const inscripcion = await getInscripcionById(id);
+        const inscripcion = await findInscripcionById(id);
 
         if(inscripcion.length === 0) return res.status(400).json({message: "No existe una inscripcion con ese ID"});
-        await deleteInscripcion(id);
+        await deleteInscripcionById(id);
 
         return res.status(200).json({message: "Inscripcion eliminada con exito"});
 
@@ -189,5 +189,5 @@ module.exports = {
     modificarInscripcion,
     listarInscripcionesCliente,
     obtenerInscripcionCliente,
-    newInscripcionCliente
+    crearInscripcionCliente
 }

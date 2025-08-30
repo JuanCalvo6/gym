@@ -1,6 +1,6 @@
 const pool = require('../config/db.js');
 
-const getInscripciones = async() =>{
+const findAllInscripciones  = async() =>{
     const [inscripciones] = await pool.query(
         `SELECT idInscripcion, idProfesor, idCliente, idPase, diaInicio AS inicio ,diaFin AS fin, precio, estado
         FROM inscripciones`
@@ -8,7 +8,7 @@ const getInscripciones = async() =>{
     return inscripciones;
 }
 
-const getInscripcionById = async(id) =>{
+const findInscripcionById = async(id) =>{
     const [inscripcion] = await pool.query(
         `SELECT 
 	        inscripciones.idProfesor,
@@ -27,7 +27,7 @@ const getInscripcionById = async(id) =>{
     return inscripcion;
 }
 
-const getInscripcionesByCliente = async(id) =>{
+const findInscripcionesByIdCliente = async(id) =>{
     const [inscripciones] = await pool.query(
         `SELECT 
 	        inscripciones.idInscripcion,
@@ -47,7 +47,7 @@ const getInscripcionesByCliente = async(id) =>{
     return inscripciones;
 }
 
-const getInscripcionesAltaByCliente = async(id) =>{
+const findAltaInscripcionesByIdCliente = async(id) =>{
     const [inscripciones] = await pool.query(
         `SELECT 
 	        inscripciones.idInscripcion,
@@ -65,7 +65,7 @@ const getInscripcionesAltaByCliente = async(id) =>{
     return inscripciones;
 }
 
-const getInscripcionByCliente = async(idCliente, idInscripcion) =>{
+const findInscripcionByIdByIdCliente = async(idCliente, idInscripcion) =>{
     const [inscripcion] = await pool.query(
         `SELECT idProfesor, idPase, diaInicio AS inicio ,diaFin AS fin, precio, estado
         FROM inscripciones
@@ -75,7 +75,7 @@ const getInscripcionByCliente = async(idCliente, idInscripcion) =>{
     return inscripcion;
 }
 
-const crearInscripcion =  async(datos, idCliente) =>{
+const insertInscripcion =  async(datos, idCliente) =>{
     await pool.query(
         `INSERT INTO inscripciones
         (idProfesor, idCliente, idPase, diaInicio, diaFin, precio, estado)
@@ -91,7 +91,7 @@ const crearInscripcion =  async(datos, idCliente) =>{
     return;
 }
 
-const updateInscripcion = async(datos, idInscripcion, idCliente) =>{
+const updateInscripcionById = async(datos, idInscripcion, idCliente) =>{
     await pool.query(
         `UPDATE inscripciones
         SET
@@ -115,7 +115,7 @@ const updateInscripcion = async(datos, idInscripcion, idCliente) =>{
     return;
 }
 
-const darAlta = async(id) =>{
+const updateAltaInscripcionById = async(id) =>{
     await pool.query(
         `UPDATE inscripciones
         SET estado = 'A'
@@ -125,7 +125,7 @@ const darAlta = async(id) =>{
     return;
 }
 
-const darBaja = async(id) =>{
+const updateBajaInscripcionById = async(id) =>{
     await pool.query(
         `UPDATE inscripciones
         SET estado = 'B'
@@ -135,7 +135,7 @@ const darBaja = async(id) =>{
     return;
 }
 
-const deleteInscripcion = async(id) =>{
+const deleteInscripcionById = async(id) =>{
     await pool.query(
         `DELETE
         FROM inscripciones
@@ -146,13 +146,13 @@ const deleteInscripcion = async(id) =>{
 }
 
 module.exports = {
-    getInscripciones,
-    getInscripcionById,
-    getInscripcionesByCliente,
-    getInscripcionesAltaByCliente,
-    getInscripcionByCliente,
-    crearInscripcion,
-    updateInscripcion,
-    darAlta, darBaja,
-    deleteInscripcion
+    findAllInscripciones ,
+    findInscripcionById,
+    findInscripcionesByIdCliente,
+    findAltaInscripcionesByIdCliente,
+    findInscripcionByIdByIdCliente,
+    insertInscripcion,
+    updateInscripcionById,
+    updateAltaInscripcionById, updateBajaInscripcionById,
+    deleteInscripcionById
 }

@@ -1,15 +1,15 @@
-const { getPases,
-        getPaseById,
-        getPaseByNombre,
-        crearPase,
-        modificarPase,
-        darAlta,
-        darBaja,
-        eliminarPase} = require('../models/pasesModel.js');
+const { findAllPases,
+        findPaseById,
+        findPaseByNombre,
+        insertPase,
+        updatePaseById,
+        updateAltaPaseById,
+        updateBajaPaseById,
+        deletePaseById} = require('../models/pasesModel.js');
 
 const listarPases = async(req, res) =>{
     try {
-        const pases = await getPases();
+        const pases = await findAllPases();
 
         if(pases.length === 0) return res.status(400).json({message: "No hay pases "})
         return res.send(pases);
@@ -23,7 +23,7 @@ const obtenerPase = async(req, res) =>{
     const id = parseInt(req.params.id, 10);
 
     try {
-        const pase = await getPaseById(id);
+        const pase = await findPaseById(id);
 
         if(pase.length === 0) return res.status(400).json({message: "No hay un pase con ese ID"});
         return res.send(pase);
@@ -33,15 +33,15 @@ const obtenerPase = async(req, res) =>{
     }
 }
 
-const newPase = async(req, res) =>{
+const crearPase = async(req, res) =>{
     const {nombre} =  req.body;
 
     try {
-        const paseFound = await getPaseByNombre(nombre);
+        const paseFound = await findPaseByNombre(nombre);
 
         if(paseFound.length > 0) return res.status(400).json({message: "Ya existe un pase con ese nombre"});
 
-        await crearPase(req.body);
+        await insertPase(req.body);
         return res.status(200).json({message: "Pase creado con exito"});
 
     } catch (error) {
@@ -49,22 +49,22 @@ const newPase = async(req, res) =>{
     }
 }
 
-const updatePase = async(req, res) =>{
+const modificarPase = async(req, res) =>{
     const {nombre} =  req.body;
     const id = parseInt(req.params.id);
 
     try {
-        const isMatchId = await getPaseById(id);
+        const isMatchId = await findPaseById(id);
 
         if(isMatchId.length === 0) return res.status(400).json({message: "No existe un pase con ese ID"});
-        const isMatchNombre = await getPaseByNombre(nombre);
+        const isMatchNombre = await findPaseByNombre(nombre);
 
         if(isMatchNombre.length > 0){
             const conflicto = isMatchNombre.some(match => match.idPase !== id);
             if(conflicto) return res.status(409).json({message: "Ya existe un pase con ese nombre"});
         }
 
-        await modificarPase(req.body, id);
+        await updatePaseById(req.body, id);
         return res.status(200).json({message: "Pase modificado con exito"});
 
     } catch (error) {
@@ -76,11 +76,11 @@ const darAltaPase = async(req, res) =>{
     const id = parseInt(req.params.id, 10);
 
     try {
-        const isMatchId = await getPaseById(id);
+        const isMatchId = await findPaseById(id);
         if(isMatchId.length === 0) return res.status(400).json({message: "No existe un pase con ese ID"});
 
         if(isMatchId[0].estado === 'A') return res.status(400).json({message: "El pase ya se encuentra dado de Alta"})
-        await darAlta(id);
+        await updateAltaPaseById(id);
         return res.status(200).json({message: "Pase dado de alta con exito"});
 
     } catch (error) {
@@ -92,12 +92,12 @@ const darBajaPase = async(req, res) =>{
     const id = parseInt(req.params.id, 10);
 
     try {
-        const isMatchId = await getPaseById(id);
+        const isMatchId = await findPaseById(id);
         console.log(isMatchId[0]);
         if(isMatchId.length === 0) return res.status(400).json({message: "No existe un pase con ese ID"});
 
         if(isMatchId[0].estado === 'B') return res.status(400).json({message: "El pase ya se encuentra dado de Baja"})
-        await darBaja(id);
+        await updateBajaPaseById(id);
         return res.status(200).json({message: "Pase dado de Baja con exito"});
         
     } catch (error) {
@@ -105,15 +105,15 @@ const darBajaPase = async(req, res) =>{
     }
 }
 
-const deletePase = async(req, res) =>{
+const eliminarPase = async(req, res) =>{
     const id = parseInt(req.params.id, 10);
 
     try {
-        const isMatchId = await getPaseById(id);
+        const isMatchId = await findPaseById(id);
 
         if(isMatchId.length === 0) return res.status(400).json({message: "No existe un pase con ese ID"});
 
-        await eliminarPase(id);
+        await deletePaseById(id);
         return res.status(200).json({message: "Pase eliminado con exito"});
 
     } catch (error) {
@@ -124,9 +124,9 @@ const deletePase = async(req, res) =>{
 module.exports ={
     listarPases,
     obtenerPase,
-    newPase,
-    updatePase,
+    crearPase,
+    modificarPase,
     darAltaPase,
     darBajaPase,
-    deletePase
+    eliminarPase
 };

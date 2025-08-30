@@ -1,6 +1,6 @@
 const pool = require('../config/db.js');
 
-const getRutinas = async() =>{
+const findAllRutinas = async() =>{
     const [rutinas] = await pool.query(
         `SELECT idRutina, idCliente, nombre, observaciones, estado
         FROM rutinas`
@@ -8,7 +8,7 @@ const getRutinas = async() =>{
     return rutinas;
 }
 
-const getRutinasByCliente = async(idCliente) =>{
+const findAllRutinasByIdCliente = async(idCliente) =>{
     const [rutinas] = await pool.query(
         `SELECT idRutina, nombre, observaciones, estado
         FROM rutinas
@@ -18,7 +18,7 @@ const getRutinasByCliente = async(idCliente) =>{
     return rutinas;
 }
 
-const getRutinasAltaByCliente = async(idCliente) =>{
+const findAltaRutinasByIdCliente = async(idCliente) =>{
     const [rutinas] = await pool.query(
         `SELECT idRutina, nombre, observaciones, estado
         FROM rutinas
@@ -28,7 +28,7 @@ const getRutinasAltaByCliente = async(idCliente) =>{
     return rutinas;
 }
 
-const getRutinaById = async(idRutina) =>{
+const findRutinaById = async(idRutina) =>{
     const [rutina] = await pool.query(
         `SELECT idCliente, nombre, observaciones, estado
         FROM rutinas
@@ -38,7 +38,7 @@ const getRutinaById = async(idRutina) =>{
     return rutina;
 }
 
-const getRutinaByCliente = async(idCliente, idRutina) =>{
+const findRutinaByIdByIdCliente = async(idCliente, idRutina) =>{
     const [rutina] = await pool.query(
         `SELECT nombre, observaciones, estado
         FROM rutinas
@@ -48,7 +48,7 @@ const getRutinaByCliente = async(idCliente, idRutina) =>{
     return rutina;
 }
 
-const getRutinaByNombre = async(nombre) =>{
+const findRutinaByNombre = async(nombre) =>{
     const [rutina] = await pool.query(
         `SELECT idRutina,idCliente, observaciones, estado
         FROM rutinas
@@ -58,7 +58,7 @@ const getRutinaByNombre = async(nombre) =>{
     return rutina;
 }
 
-const nuevaRutina = async(datos, idCliente) =>{
+const insertRutina = async(datos, idCliente) =>{
     await pool.query(
         `INSERT INTO rutinas
         (idCliente, nombre, observaciones, estado)
@@ -71,7 +71,7 @@ const nuevaRutina = async(datos, idCliente) =>{
     return;
 }
 
-const updateRutina = async(datos, idRutina, idCliente) =>{
+const updateRutinaById = async(datos, idRutina, idCliente) =>{
     await pool.query(
         `UPDATE rutinas
         SET
@@ -89,7 +89,7 @@ const updateRutina = async(datos, idRutina, idCliente) =>{
     return;
 }
 
-const darAlta = async(idRutina) =>{
+const updateAltaRutinaById = async(idRutina) =>{
     await pool.query(
         `UPDATE rutinas
         SET estado = 'A'
@@ -99,7 +99,7 @@ const darAlta = async(idRutina) =>{
     return;
 }
 
-const darBaja = async(idRutina) =>{
+const updateBajaRutinaById = async(idRutina) =>{
     await pool.query(
         `UPDATE rutinas
         SET estado = 'B'
@@ -109,7 +109,7 @@ const darBaja = async(idRutina) =>{
     return;
 }
 
-const deleteRutina = async(idRutina) =>{
+const deleteRutinaById = async(idRutina) =>{
     await pool.query(
         `DELETE
         FROM rutinas
@@ -120,14 +120,14 @@ const deleteRutina = async(idRutina) =>{
 }
 
 module.exports = {
-    getRutinas,
-    getRutinasByCliente,
-    getRutinasAltaByCliente,
-    getRutinaById,
-    getRutinaByCliente,
-    nuevaRutina,
-    getRutinaByNombre,
-    updateRutina,
-    darAlta, darBaja,
-    deleteRutina
+    findAllRutinas,
+    findAllRutinasByIdCliente,
+    findAltaRutinasByIdCliente,
+    findRutinaById,
+    findRutinaByIdByIdCliente,
+    insertRutina,
+    findRutinaByNombre,
+    updateRutinaById,
+    updateAltaRutinaById, updateBajaRutinaById,
+    deleteRutinaById
 };

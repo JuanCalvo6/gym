@@ -1,6 +1,6 @@
 const pool = require('../config/db.js');
 
-const getEjercicios = async()=>{
+const findAllEjercicios = async()=>{
     const [ejercicios] = await pool.query(
         `SELECT  idEjercicio, nombre, estado
         FROM ejercicios
@@ -10,7 +10,7 @@ const getEjercicios = async()=>{
     return ejercicios;
 }
 
-const getEjercicioById = async(id) =>{
+const findEjercicioById = async(id) =>{
     const [ejercicio] = await pool.query(
         `SELECT nombre, estado
         FROM ejercicios
@@ -20,7 +20,7 @@ const getEjercicioById = async(id) =>{
     return ejercicio;
 }
 
-const getEjercicioByNombre = async(nombre) =>{
+const findEjercicioByNombre = async(nombre) =>{
     const [ejercicio] =  await pool.query(
         `SELECT nombre, estado
         FROM ejercicios
@@ -30,7 +30,7 @@ const getEjercicioByNombre = async(nombre) =>{
     return ejercicio;
 }
 
-const nuevoEjercicio = async(nombre) =>{
+const insertEjercicio = async(nombre) =>{
     await pool.query(
         `INSERT INTO ejercicios
         (nombre, estado)
@@ -40,7 +40,7 @@ const nuevoEjercicio = async(nombre) =>{
     return;
 }
 
-const updateEjercicio = async(ejercicio, id) =>{
+const updateEjercicioById = async(ejercicio, id) =>{
     await pool.query(
         `UPDATE ejercicios 
          SET nombre =  ?
@@ -50,7 +50,7 @@ const updateEjercicio = async(ejercicio, id) =>{
     return;
 }
 
-const darBaja = async(id) =>{
+const updateBajaEjercicioById = async(id) =>{
     await pool.query(
         `UPDATE ejercicios
         SET estado = 'B'
@@ -60,7 +60,7 @@ const darBaja = async(id) =>{
     return;
 }
 
-const darAlta = async(id) =>{
+const updateAltaEjercicioById = async(id) =>{
     await pool.query(
         `UPDATE ejercicios
         SET estado = 'A'
@@ -70,7 +70,7 @@ const darAlta = async(id) =>{
     return;
 }
 
-const eliminarEjercicio = async(id) =>{
+const deleteEjercicioById = async(id) =>{
     await pool.query(
         `DELETE 
         FROM ejercicios
@@ -81,12 +81,12 @@ const eliminarEjercicio = async(id) =>{
 }
 
 module.exports = {
-    getEjercicios,
-    getEjercicioById,
-    getEjercicioByNombre,
-    nuevoEjercicio,
-    updateEjercicio,
-    darBaja,
-    darAlta,
-    eliminarEjercicio
+    findAllEjercicios,
+    findEjercicioById,
+    findEjercicioByNombre,
+    insertEjercicio,
+    updateEjercicioById,
+    updateBajaEjercicioById,
+    updateAltaEjercicioById,
+    deleteEjercicioById
 }

@@ -1,17 +1,17 @@
-const { getClienteById } = require('../models/clientesModel.js');
-const {getEjercicioById} = require('../models/ejerciciosModel.js');
-const { getLineas,
-        getlineasDeRutina,
-        getLineaById,
-        getLineaDeRutina,
-        newLineaDeRutina,
-        updateLinaDeRutina,
-        deleteLineaDeRutina} = require('../models/lineasDeRutinaModel.js');
-const { getRutinaById } = require('../models/rutinasModel.js');
+const { findClienetById } = require('../models/clientesModel.js');
+const {findEjercicioById} = require('../models/ejerciciosModel.js');
+const { findAllLineasDeRutina,
+        findLineasDeRutinaByIdRutina,
+        findLineaDeRutinaById,
+        findLineaDeRutinaByIdByIdRutina,
+        insertLineaDeRutina,
+        updateLineaDeRutinaById,
+        deleteLineaDeRutinaById} = require('../models/lineasDeRutinaModel.js');
+const { findRutinaById } = require('../models/rutinasModel.js');
 
-const listarLineas = async(req, res)=>{
+const listarLineasDeRutinaRutina = async(req, res)=>{
     try {
-        const lineasDeRutina = await getLineas();
+        const lineasDeRutina = await findAllLineasDeRutina();
 
         if(lineasDeRutina.length === 0) return res.status(400).json({message: "No hay lineas de Rutina"});
         return res.send(lineasDeRutina);
@@ -21,14 +21,14 @@ const listarLineas = async(req, res)=>{
     }
 }
 
-const listarLineasDeRutina = async(req, res)=>{
+const listarLineasDeRutinaRutinaDeRutina = async(req, res)=>{
     const idRutina = parseInt(req.params.id, 10);
 
     try {
-        const rutina = await getRutinaById(idRutina);
+        const rutina = await findRutinaById(idRutina);
 
         if(rutina.length === 0) return res.status(400).json({message: "No existe una rutina con ese ID"});
-        const lineasDeRutina = await getlineasDeRutina(idRutina);
+        const lineasDeRutina = await findLineasDeRutinaByIdRutina(idRutina);
 
         if(lineasDeRutina.length === 0) return res.status(400).json({message: "La rutina no tiene lineas de Rutina"});
         return res.send(lineasDeRutina);
@@ -38,11 +38,11 @@ const listarLineasDeRutina = async(req, res)=>{
     }
 }
 
-const obtenerLinea = async(req, res)=>{
+const obtenerLineaDeRutinaRutina = async(req, res)=>{
     const idLinea = parseInt(req.params.id, 10);
 
     try {
-        const lineaDeRutina = await getLineaById(idLinea);
+        const lineaDeRutina = await findLineaDeRutinaById(idLinea);
 
         if(lineaDeRutina.length === 0) return res.status(400).json({message: "No existe una linea de rutina con ese ID"});
         return res.send(lineaDeRutina);
@@ -52,15 +52,15 @@ const obtenerLinea = async(req, res)=>{
     }
 }
 
-const obtenerLineaDeRutina = async(req, res)=>{
+const obtenerLineaDeRutinaRutinaDeRutina = async(req, res)=>{
     const idRutina = parseInt(req.params.id, 10);
     const idLinea = parseInt(req.params.idLinea, 10);
 
     try {
-        const rutina = await getRutinaById(idRutina);
+        const rutina = await findRutinaById(idRutina);
 
         if(rutina.length === 0) return res.status(400).json({message: "No existe una rutina con ese ID"});
-        const lineaDeRutina = await getLineaDeRutina(idRutina, idLinea);
+        const lineaDeRutina = await findLineaDeRutinaByIdByIdRutina(idRutina, idLinea);
 
         if(lineaDeRutina.length === 0) return res.status(400).json({message: "La rutina no tiene una linea con ese ID"});
         return res.send(lineaDeRutina);
@@ -70,18 +70,18 @@ const obtenerLineaDeRutina = async(req, res)=>{
     }
 }
 
-const nuevaLineaDeRutina = async(req, res)=>{
+const nuevaLineaDeRutinaRutina = async(req, res)=>{
     const idRutina = parseInt(req.params.id, 10);
     const {idEjercicio} = req.body;
 
     try {
-        const rutina = await getRutinaById(idRutina);
+        const rutina = await findRutinaById(idRutina);
         
         if(rutina.length === 0) return res.status(400).json({message: "No existe una rutina con ese ID"});
-        const ejercicio = await getEjercicioById(idEjercicio);
+        const ejercicio = await findEjercicioById(idEjercicio);
 
         if(ejercicio.length === 0) return res.status(400).json({message: "No existe un ejercicio con ese ID"});
-        await newLineaDeRutina(req.body, idRutina, rutina[0].idCliente);
+        await insertLineaDeRutina(req.body, idRutina, rutina[0].idCliente);
         return res.status(200).json({message: "Linea de rutina creada con exito"});
         
     } catch (error) {
@@ -94,13 +94,13 @@ const modificarLineaDeRutina = async(req, res)=>{
     const {idEjercicio} = req.body;
 
     try {
-        const lineaDeRutina = await getLineaById(idLinea);
+        const lineaDeRutina = await findLineaDeRutinaById(idLinea);
 
         if(lineaDeRutina.length === 0) return res.status(400).json({message: "No existe una linea de rutina con ese ID"});
-        const ejercicio = await getEjercicioById(idEjercicio);
+        const ejercicio = await findEjercicioById(idEjercicio);
 
         if(ejercicio.length === 0) return res.status(400).json({message: "No existe un ejercicio con ese ID"});
-        await updateLinaDeRutina(req.body, idLinea, lineaDeRutina[0].idRutina, lineaDeRutina[0].idCliente);
+        await updateLineaDeRutinaById(req.body, idLinea, lineaDeRutina[0].idRutina, lineaDeRutina[0].idCliente);
 
         return res.status(200).json({message: "Linea de rutina modificada con exito"});
         
@@ -109,14 +109,14 @@ const modificarLineaDeRutina = async(req, res)=>{
     }
 }
 
-const eliminarLineasDeRutina = async(req, res)=>{
+const eliminarLineaDeRutina = async(req, res)=>{
     const idLinea = parseInt(req.params.id, 10);
 
     try {
-        const lineaDeRutina = await getLineaById(idLinea);
+        const lineaDeRutina = await findLineaDeRutinaById(idLinea);
 
         if(lineaDeRutina.length === 0) return res.status(400).json({message: "No existe una linea de rutina con ese ID"});
-        await deleteLineaDeRutina(idLinea);
+        await deleteLineaDeRutinaById(idLinea);
         return res.status(200).json({message: "Linea de rutina eliminada con exito"});
         
     } catch (error) {
@@ -125,11 +125,11 @@ const eliminarLineasDeRutina = async(req, res)=>{
 }
 
 module.exports = {
-    listarLineas,
-    listarLineasDeRutina,
-    obtenerLinea,
-    obtenerLineaDeRutina,
-    nuevaLineaDeRutina,
+    listarLineasDeRutinaRutina,
+    listarLineasDeRutinaRutinaDeRutina,
+    obtenerLineaDeRutinaRutina,
+    obtenerLineaDeRutinaRutinaDeRutina,
+    nuevaLineaDeRutinaRutina,
     modificarLineaDeRutina,
-    eliminarLineasDeRutina
+    eliminarLineaDeRutina
 }
