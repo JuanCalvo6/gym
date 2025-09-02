@@ -1,31 +1,21 @@
-Los mail tambien deberian ser unicos!!.
+(OK) Los mail tambien deberian ser unicos!!.
 
-Al crear nuevos profesores puedo asignar directamente estado = 'A', no hace falta pasar la 'A' por body.
+(OK) Al crear nuevos profesores puedo asignar directamente estado = 'A', no hace falta pasar la 'A' por body.
 
-En las validaciones puedo agregar una que vuelva todos los string a minusculas. Sino "Sentadilla" y "sentadilla" pueden ser agregados sin ver duplicidad.
+(OK) En las validaciones puedo agregar una que vuelva todos los string a minusculas. Sino "Sentadilla" y
+"sentadilla" pueden ser agregados sin ver duplicidad.
 
-X - En los pases tambien deberia controlar que ademas de que no existan pases con el mismo nombre, no tiene logica que existan pases con
-la misma franja horaria. (Un pase para una actividad en especial? Ej. pilates)
+(OK) En los pases tendria que controlar que el horaInicio y HoraFin no sean iguales y que horaFin sea mayor que horaInicio.
 
-En los pases tendria que controlar que el horaInicio y HoraFin no sean iguales y que horaFin sea mayor que horaInicio.
+(OK) Agregar a clientes que el DNI debe ser único.  
 
-los metodos para traer uno o todos no tienen en cuenta el estado. Agregar!.
+(OK) Agregar el control de que la fecha de inicio de una nueva inscripcion no debe estar dentro de otra inscripcion.
 
-Agregar a clientes que el DNI debe ser único. 
+A las incripciones le tengo que pasar el precio desde la consulta al pase para mantener la consistencia de los valores,
+no desde body.
 
-X - El documento deberia poder modificarse??? (Error de tipeo)
-
-El dni esta mal llamado, deberia ser mas generico como ser documento.
-
-En los msjs de respuesta puedo hacerlo mas detallado y poner los nombres de los clientes, profesores...
-
-En las consultas en vez de devolver los id, hacer las consultas con JOIN y ya devolver datos. 
-
-Agregar el control de que la fecha de inicio de una nueva inscripcion no debe estar dentro de otra inscripcion.
-
-A las incripciones le tengo que pasar el precio desde la consulta al pase para mantener la consistencia de los valores, no desde body.
-
-En las rutinas el nombre no debe ser unico en general, puede ser unico para cada cliente. Permitir signos en los nombres, no solo letras.
+En las rutinas el nombre no debe ser unico en general, puede ser unico para cada cliente. Permitir signos en los nombres,
+no solo letras.
 
 Agregar los controles al eliminar. Ej: al eliminar una rutina no pueden quedar lineas de rutina que pertenezcan a ella.
 
@@ -35,8 +25,8 @@ Una rutina no puede tener dos lineas de rutina con el mismo ejercicio.
 
 El descanso de las lineas de rutina deberia ser un varchar o un time para poder expresar en min o segundos.
 
-En las creaciones relacionadas con otras tablas tendria que controlar que se puede usar si el estado es 'A'. Ej: en las lineas de rutina
-solo se deben poder seleccionar ejercicios que esten en estado 'A'.
+En las creaciones relacionadas con otras tablas tendria que controlar que se puede usar si el estado es 'A'. 
+Ej: en las lineas de rutina solo se deben poder seleccionar ejercicios que esten en estado 'A'.
 
 Clasificar los tipos de errores para poder mostrarlos mejor en el frontend (Seguir el ejemplo de validarLogin).
 

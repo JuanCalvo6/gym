@@ -27,9 +27,6 @@ function validarDatosInscripcion(datos){
     if(!/^\d{1,20}$/.test(datos.precio))
         errores.push("El precio solo acepta números");
 
-    if (!['A', 'B'].includes(datos.estado)) 
-        errores.push('El estado debe ser A (activo) o B (baja).');
-
     return errores;
 }
 

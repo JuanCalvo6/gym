@@ -10,6 +10,7 @@ const inscripcionesRoutes = require('./routes/inscripcionesRoutes.js');
 const rutinasRoutes = require('./routes/rutinasRoutes.js');
 const lineasDeRutinaRoutes = require('./routes/lineasDeRutinaRoutes.js');
 const cookieParser = require('cookie-parser');
+const toLowerCaseMiddleware = require('./middlewares/toLowerCaseMiddleware.js');
 
 const app = express();
 
@@ -20,7 +21,7 @@ app.use(cors({
     credentials: true,
 }));
 
-
+app.use(toLowerCaseMiddleware);
 //Aca van todas las rutas que vaya a usar...
 //1. Iniciar sesión requiere autenticaciones...
 app.use('/api', autRoutes);

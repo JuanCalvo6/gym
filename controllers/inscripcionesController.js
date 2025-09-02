@@ -97,7 +97,15 @@ const crearInscripcionCliente = async(req, res) =>{
         if(pase.length === 0) return res.status(400).json({message: "No existe un pase con ese ID"});
         const inscripciones = await findAltaInscripcionesByIdCliente(idCliente);
 
-        if(inscripciones.length > 0) return res.status(400).json({message: "El cliente ya tiene una inscripcion en Alta"});
+        if(inscripciones.length > 0) {
+            for(const inscripcion of inscripciones){
+                const diaFin = inscripcion.diaFin;
+                const fechaFin = diaFin.toISOString().split("T")[0];
+
+                if(req.body.diaInicio < fechaFin)
+                    return res.status(400).json({message: "El cliente ya tiene una inscripcion en Alta para esa fecha"});
+            }
+        }
         await insertInscripcion(req.body, idCliente);
         return res.status(200).json({message: "Inscripcion creada con exito"});
 

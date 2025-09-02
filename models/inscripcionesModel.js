@@ -53,8 +53,8 @@ const findAltaInscripcionesByIdCliente = async(id) =>{
 	        inscripciones.idInscripcion,
             inscripciones.idProfesor,
             pases.nombre AS pase,
-            inscripciones.diaInicio AS inicio,
-            inscripciones.diaFin AS fin, 
+            inscripciones.diaInicio,
+            inscripciones.diaFin, 
             inscripciones.precio,
             inscripciones.estado
         FROM inscripciones

@@ -28,6 +28,16 @@ const findProfesorByDniByUsuario = async(dni, usuario) =>{
     return profesor;
 }
 
+const findProfesorByMail = async(mail) =>{
+    const [profesor] = await pool.querry(
+        `SELECT idProfesor
+        FROM profesores
+        WHERE mail = ?`,
+        [mail]
+    );
+    return profesor;
+}
+
 const insertProfesor = async(datos) =>{
     const [profesor] = await pool.query(
         `INSERT INTO profesores
@@ -103,6 +113,7 @@ module.exports = {
     findAllProfesores,
     findProfesorById,
     findProfesorByDniByUsuario,
+    findProfesorByMail,
     insertProfesor,
     updateProfesorById,
     updateBajaProfesorById,

@@ -2,6 +2,7 @@ const bcrypt = require('bcryptjs');
 const   {findAllProfesores,
          findProfesorById,
         findProfesorByDniByUsuario,
+        findProfesorByMail,
         insertProfesor,
         updateProfesorById,
         updateBajaProfesorById,
@@ -34,12 +35,16 @@ const obtenerProfesor = async(req, res) =>{
 }
 
 const nuevoProfesor = async(req, res) =>{
-    const {contraseña, dni, usuario} = req.body;
+    const {contraseña, dni, usuario, mail} = req.body;
 
     try {
         const profesorFound = await findProfesorByDniByUsuario(dni, usuario);
         if(profesorFound.length > 0)
-            return res.status(409).json({message: "Ya existe un profesor con ese dni o usuario"});
+            return res.status(400).json({message: "Ya existe un profesor con ese dni o usuario."});
+        
+        const matchMail = await findProfesorByMail(mail)
+        if(matchMail.length > 0)
+            return res.status(400).json({message: "Ya existe un profesor con ese mail."})
         
         const contraseñaHash = await bcrypt.hash(contraseña, 10);
         req.body.contraseña = contraseñaHash;

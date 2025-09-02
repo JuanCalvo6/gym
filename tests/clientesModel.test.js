@@ -1,3 +1,4 @@
+//Test unitarios a nivel model me parecen muy elementales para hacer.
 const pool = require('../config/db.js');
 const {getAllClientes} = require('../models/clientesModel.js');
 
