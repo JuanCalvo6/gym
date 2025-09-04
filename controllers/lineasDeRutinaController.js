@@ -2,6 +2,7 @@ const { findClienetById } = require('../models/clientesModel.js');
 const {findEjercicioById} = require('../models/ejerciciosModel.js');
 const { findAllLineasDeRutina,
         findLineasDeRutinaByIdRutina,
+        findLineasDeRutinaByIdEjercicioByIdRutina,
         findLineaDeRutinaById,
         findLineaDeRutinaByIdByIdRutina,
         insertLineaDeRutina,
@@ -9,7 +10,7 @@ const { findAllLineasDeRutina,
         deleteLineaDeRutinaById} = require('../models/lineasDeRutinaModel.js');
 const { findRutinaById } = require('../models/rutinasModel.js');
 
-const listarLineasDeRutinaRutina = async(req, res)=>{
+const listarLineasDeRutina = async(req, res)=>{
     try {
         const lineasDeRutina = await findAllLineasDeRutina();
 
@@ -21,7 +22,7 @@ const listarLineasDeRutinaRutina = async(req, res)=>{
     }
 }
 
-const listarLineasDeRutinaRutinaDeRutina = async(req, res)=>{
+const listarLineasDeRutinaRutina = async(req, res)=>{
     const idRutina = parseInt(req.params.id, 10);
 
     try {
@@ -81,6 +82,10 @@ const nuevaLineaDeRutinaRutina = async(req, res)=>{
         const ejercicio = await findEjercicioById(idEjercicio);
 
         if(ejercicio.length === 0) return res.status(400).json({message: "No existe un ejercicio con ese ID"});
+        const isMatchEjercicio = await findLineasDeRutinaByIdEjercicioByIdRutina(idRutina, idEjercicio);
+
+        if(isMatchEjercicio.length > 0) return res.status(400).json({message: "Ya se encuentra ese ejercicio en la rutina"});
+
         await insertLineaDeRutina(req.body, idRutina, rutina[0].idCliente);
         return res.status(200).json({message: "Linea de rutina creada con exito"});
         
@@ -125,8 +130,8 @@ const eliminarLineaDeRutina = async(req, res)=>{
 }
 
 module.exports = {
+    listarLineasDeRutina,
     listarLineasDeRutinaRutina,
-    listarLineasDeRutinaRutinaDeRutina,
     obtenerLineaDeRutinaRutina,
     obtenerLineaDeRutinaRutinaDeRutina,
     nuevaLineaDeRutinaRutina,

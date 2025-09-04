@@ -1,29 +1,16 @@
-(OK) Los mail tambien deberian ser unicos!!.
-
-(OK) Al crear nuevos profesores puedo asignar directamente estado = 'A', no hace falta pasar la 'A' por body.
-
-(OK) En las validaciones puedo agregar una que vuelva todos los string a minusculas. Sino "Sentadilla" y
-"sentadilla" pueden ser agregados sin ver duplicidad.
-
-(OK) En los pases tendria que controlar que el horaInicio y HoraFin no sean iguales y que horaFin sea mayor que horaInicio.
-
-(OK) Agregar a clientes que el DNI debe ser único.  
-
-(OK) Agregar el control de que la fecha de inicio de una nueva inscripcion no debe estar dentro de otra inscripcion.
-
-A las incripciones le tengo que pasar el precio desde la consulta al pase para mantener la consistencia de los valores,
+(OK) A las incripciones le tengo que pasar el precio desde la consulta al pase para mantener la consistencia de los valores,
 no desde body.
 
-En las rutinas el nombre no debe ser unico en general, puede ser unico para cada cliente. Permitir signos en los nombres,
+(OK) En las rutinas el nombre no debe ser unico en general, puede ser unico para cada cliente. Permitir signos en los nombres,
 no solo letras.
 
 Agregar los controles al eliminar. Ej: al eliminar una rutina no pueden quedar lineas de rutina que pertenezcan a ella.
 
-Consistencia en los nombres de las funciones... D:
+(OK) Consistencia en los nombres de las funciones... D:
 
-Una rutina no puede tener dos lineas de rutina con el mismo ejercicio.
+(OK) Una rutina no puede tener dos lineas de rutina con el mismo ejercicio.
 
-El descanso de las lineas de rutina deberia ser un varchar o un time para poder expresar en min o segundos.
+(OK) El descanso de las lineas de rutina deberia ser un varchar o un time para poder expresar en min o segundos.
 
 En las creaciones relacionadas con otras tablas tendria que controlar que se puede usar si el estado es 'A'. 
 Ej: en las lineas de rutina solo se deben poder seleccionar ejercicios que esten en estado 'A'.

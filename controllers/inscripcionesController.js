@@ -106,7 +106,7 @@ const crearInscripcionCliente = async(req, res) =>{
                     return res.status(400).json({message: "El cliente ya tiene una inscripcion en Alta para esa fecha"});
             }
         }
-        await insertInscripcion(req.body, idCliente);
+        await insertInscripcion(req.body, idCliente, pase.precio);
         return res.status(200).json({message: "Inscripcion creada con exito"});
 
     } catch (error) {

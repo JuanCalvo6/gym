@@ -48,12 +48,12 @@ const findRutinaByIdByIdCliente = async(idCliente, idRutina) =>{
     return rutina;
 }
 
-const findRutinaByNombre = async(nombre) =>{
+const findRutinaByNombre = async(nombre, idCliente) =>{
     const [rutina] = await pool.query(
         `SELECT idRutina,idCliente, observaciones, estado
         FROM rutinas
-        WHERE nombre = ?`,
-        [nombre]
+        WHERE nombre = ? AND idCliente = ?`,
+        [nombre, idCliente]
     );
     return rutina;
 }

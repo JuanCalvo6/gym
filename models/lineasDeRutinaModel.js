@@ -19,6 +19,16 @@ const findLineasDeRutinaByIdRutina = async(idRutina) =>{
     return lineasDeRutina;
 }
 
+const findLineasDeRutinaByIdEjercicioByIdRutina = async(idRutina, idEjercicio) =>{
+    const [lineasDeRutina] = await pool.query(
+        `SELECT idLineaDeRutina
+        FROM lineasDeRutina
+        WHERE idRutina = ? AND idEjercicio =  ?`,
+        [idRutina, idEjercicio]
+    );
+    return lineasDeRutina;
+}
+
 const findLineaDeRutinaById = async(idLinea) =>{
     const [lineaDeRutina] = await pool.query(
         `SELECT idRutina, idCliente, idEjercicio, repeticiones, series, descanso
@@ -89,6 +99,7 @@ const deleteLineaDeRutinaById = async(idLinea) =>{
 module.exports = {
     findAllLineasDeRutina,
     findLineasDeRutinaByIdRutina,
+    findLineasDeRutinaByIdEjercicioByIdRutina,
     findLineaDeRutinaById,
     findLineaDeRutinaByIdByIdRutina,
     insertLineaDeRutina,

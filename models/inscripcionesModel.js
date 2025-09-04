@@ -75,7 +75,7 @@ const findInscripcionByIdByIdCliente = async(idCliente, idInscripcion) =>{
     return inscripcion;
 }
 
-const insertInscripcion =  async(datos, idCliente) =>{
+const insertInscripcion =  async(datos, idCliente, precio) =>{
     await pool.query(
         `INSERT INTO inscripciones
         (idProfesor, idCliente, idPase, diaInicio, diaFin, precio, estado)
@@ -85,7 +85,7 @@ const insertInscripcion =  async(datos, idCliente) =>{
         datos.idPase,
         datos.diaInicio,
         datos.diaFin,
-        datos.precio   
+        precio   
         ]
     );
     return;
