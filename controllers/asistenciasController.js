@@ -5,7 +5,7 @@ const { findAllAsistencias,
         findAsistenciaByIdByIdCliente,
         insertAsistenciaByIdCliente
 } = require('../models/asistenciasModel.js');
-const { findClienetById } = require('../models/clientesModel.js');
+const { findClienetById, findAltaClienteById } = require('../models/clientesModel.js');
 
 const listarAsistencias = async(req, res) =>{
     try {
@@ -73,9 +73,9 @@ const crearAsistenciaCliente = async(req, res) =>{
     const id = parseInt(req.params.id, 10);
 
     try {
-        const isMatch = await findClienetById(id);
+        const isMatch = await findAltaClienteById(id);
 
-        if(isMatch.length === 0) return res.status(400).json({message: "No existe un cliente con ese ID"});
+        if(isMatch.length === 0) return res.status(400).json({message: "No existe un cliente en Alta con ese ID"});
 
         await insertAsistenciaByIdCliente(req.body, id);
         return res.status(200).json({message: "Asistencia creada con exito"});

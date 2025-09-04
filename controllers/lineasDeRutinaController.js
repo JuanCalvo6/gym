@@ -1,5 +1,5 @@
 const { findClienetById } = require('../models/clientesModel.js');
-const {findEjercicioById} = require('../models/ejerciciosModel.js');
+const {findEjercicioById, findAltaEjercicioById} = require('../models/ejerciciosModel.js');
 const { findAllLineasDeRutina,
         findLineasDeRutinaByIdRutina,
         findLineasDeRutinaByIdEjercicioByIdRutina,
@@ -79,9 +79,10 @@ const nuevaLineaDeRutinaRutina = async(req, res)=>{
         const rutina = await findRutinaById(idRutina);
         
         if(rutina.length === 0) return res.status(400).json({message: "No existe una rutina con ese ID"});
-        const ejercicio = await findEjercicioById(idEjercicio);
-
-        if(ejercicio.length === 0) return res.status(400).json({message: "No existe un ejercicio con ese ID"});
+         if(rutina[0].estado === 'B') return res.status(400).json({message: "La rutina debe estar dada de Alta"});
+        const ejercicio = await findAltaEjercicioById(idEjercicio);
+       
+        if(ejercicio.length === 0) return res.status(400).json({message: "No existe un ejercicio en Alta con ese ID"});
         const isMatchEjercicio = await findLineasDeRutinaByIdEjercicioByIdRutina(idRutina, idEjercicio);
 
         if(isMatchEjercicio.length > 0) return res.status(400).json({message: "Ya se encuentra ese ejercicio en la rutina"});

@@ -1,20 +1,8 @@
-(OK) A las incripciones le tengo que pasar el precio desde la consulta al pase para mantener la consistencia de los valores,
-no desde body.
-
-(OK) En las rutinas el nombre no debe ser unico en general, puede ser unico para cada cliente. Permitir signos en los nombres,
-no solo letras.
-
 Agregar los controles al eliminar. Ej: al eliminar una rutina no pueden quedar lineas de rutina que pertenezcan a ella.
 
-(OK) Consistencia en los nombres de las funciones... D:
-
-(OK) Una rutina no puede tener dos lineas de rutina con el mismo ejercicio.
-
-(OK) El descanso de las lineas de rutina deberia ser un varchar o un time para poder expresar en min o segundos.
-
-En las creaciones relacionadas con otras tablas tendria que controlar que se puede usar si el estado es 'A'. 
+(OK) En las creaciones relacionadas con otras tablas tendria que controlar que se puede usar si el estado es 'A'. 
 Ej: en las lineas de rutina solo se deben poder seleccionar ejercicios que esten en estado 'A'.
 
-Clasificar los tipos de errores para poder mostrarlos mejor en el frontend (Seguir el ejemplo de validarLogin).
+(OK) Clasificar los tipos de errores para poder mostrarlos mejor en el frontend (Seguir el ejemplo de validarLogin).
 
-Controlar el tema de poner un use(validarRol) generico porque afecta desde el archivo app.
+(OK) Controlar el tema de poner un use(validarRol) generico porque afecta desde el archivo app.

@@ -13,18 +13,17 @@ const validarProfesor = require('../middlewares/validarProfesor.js');
 const router = express.Router();
 
 router.use(validarToken);
-// router.use(validarRol("admin"));
 
 router.get('/profesores', listarProfesores);
 router.get('/profesores/:id', obtenerProfesor);
 
-router.post('/profesores',validarProfesor, nuevoProfesor);
+router.post('/profesores', validarRol("admin"), validarProfesor, nuevoProfesor);
 
-router.put('/profesores/:id', modificarProfesor);
+router.put('/profesores/:id', validarRol("admin"), modificarProfesor);
 
-router.patch('/profesores/:id/baja', darBajaProfesor);
-router.patch('/profesores/:id/alta', darAltaProfesor);
+router.patch('/profesores/:id/baja', validarRol("admin"), darBajaProfesor);
+router.patch('/profesores/:id/alta', validarRol("admin"), darAltaProfesor);
 
-router.delete('/profesores/:id', eliminarProfesor);
+router.delete('/profesores/:id', validarRol("admin"), eliminarProfesor);
 
 module.exports = router;

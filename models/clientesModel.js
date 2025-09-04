@@ -55,6 +55,16 @@ const findClienetById = async(id) =>{
     return cliente;
 }
 
+const findAltaClienteById = async(id) =>{
+    const [cliente] = await pool.query(
+        `SELECT nombres, apellidos, tipoDni, dni, huella, telefono, direccion, mail, estado
+        FROM clientes
+        WHERE idCliente = ? AND estado = 'A'`,
+        [id]
+    );
+    return cliente;
+}
+
 const insertCliente = async(datos) =>{
     await pool.query(
         `INSERT INTO clientes
@@ -134,6 +144,7 @@ module.exports = {
     findAllClientes, findAllClientesByNombresByApellidos,
     findAltaClientes, findAltaClientesByNombresByApellidos,
     findClienetById,
+    findAltaClienteById,
     insertCliente,
     updateClienteById, 
     updateAltaClienteById, 

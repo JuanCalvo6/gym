@@ -12,19 +12,18 @@ const { validarToken } = require('../middlewares/validarToken.js');
 const { validarRol } = require('../middlewares/validarRol.js');
 
 router.use(validarToken);
-// router.use(validarRol("admin"));
 
 router.get('/ejercicios', listarEjercicios);
 router.get('/ejercicios/:id', obtenerEjercicio);
 
-router.post('/ejercicios', nuevoEjercicio);
+router.post('/ejercicios', validarRol("admin"), nuevoEjercicio);
 
-router.put('/ejercicios/:id', modificarEjercicio)
+router.put('/ejercicios/:id', validarRol("admin"), modificarEjercicio)
 
-router.patch('/ejercicios/:id/baja', darBajaEjercicio);
-router.patch('/ejercicios/:id/alta', darAltaEjercicio);
+router.patch('/ejercicios/:id/baja', validarRol("admin"), darBajaEjercicio);
+router.patch('/ejercicios/:id/alta', validarRol("admin"), darAltaEjercicio);
 
-router.delete('/ejercicios/:id', eliminarEjercicio);
+router.delete('/ejercicios/:id', validarRol("admin"), eliminarEjercicio);
 
 
 module.exports = router;

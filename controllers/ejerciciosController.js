@@ -1,4 +1,5 @@
 const { findAllEjercicios,
+        findAltaEjercicios,
         findEjercicioById,
         findEjercicioByNombre,
         insertEjercicio,
@@ -8,9 +9,15 @@ const { findAllEjercicios,
         deleteEjercicioById} = require('../models/ejerciciosModel.js');
 
 const listarEjercicios = async(req, res) =>{
+    const {bajas} = req.query;
+    const mostrarBajas = (bajas === 'true');
     try {
-        const ejercicios = await findAllEjercicios();
-
+        let ejercicios = [];
+        if(mostrarBajas)
+            ejercicios = await findAllEjercicios();
+        else
+            ejercicios = await findAltaEjercicios();
+        
         if(ejercicios.length === 0) return res.status(400).json({message: "No hay ejercicios"});
         return res.send(ejercicios);
 

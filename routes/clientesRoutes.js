@@ -23,27 +23,26 @@ const { validarToken } = require('../middlewares/validarToken.js');
 const { validarRol } = require('../middlewares/validarRol.js');
 
 router.use(validarToken);
-// router.use(validarRol("prof"));
 
-router.get('/clientes', listarClientes);
-router.get('/clientes/:id',obtenerCliente);
-router.get('/clientes/:id/asistencias', listarAsistenciasCliente);
-router.get('/clientes/:id/asistencias/:idAsistencia', obtenerAsistenciaCliente);
-router.get('/clientes/:id/inscripciones', listarInscripcionesCliente);
-router.get('/clientes/:id/inscripciones/:idInscripcion', obtenerInscripcionCliente);
-router.get('/clientes/:id/rutinas', listarRutinasCliente);
-router.get('/clientes/:id/rutinas/:idRutina', obtenerRutinaCliente);
+router.get('/clientes', validarRol("prof"), listarClientes);
+router.get('/clientes/:id', validarRol("prof"),obtenerCliente);
+router.get('/clientes/:id/asistencias', validarRol("prof"), listarAsistenciasCliente);
+router.get('/clientes/:id/asistencias/:idAsistencia', validarRol("prof"), obtenerAsistenciaCliente);
+router.get('/clientes/:id/inscripciones', validarRol("prof"), listarInscripcionesCliente);
+router.get('/clientes/:id/inscripciones/:idInscripcion', validarRol("prof"), obtenerInscripcionCliente);
+router.get('/clientes/:id/rutinas', validarRol("prof"), listarRutinasCliente);
+router.get('/clientes/:id/rutinas/:idRutina', validarRol("prof"), obtenerRutinaCliente);
 
-router.post('/clientes',validarCliente, crearCliente);
-router.post('/clientes/:id/asistencias', validarAsistencia, crearAsistenciaCliente);
-router.post('/clientes/:id/inscripciones',validarInscripcion, crearInscripcionCliente);
-router.post('/clientes/:id/rutinas', validarRutina, crearRutinaCliente);
+router.post('/clientes', validarRol("prof"), validarCliente, crearCliente);
+router.post('/clientes/:id/asistencias', validarRol("prof"), validarAsistencia, crearAsistenciaCliente);
+router.post('/clientes/:id/inscripciones', validarRol("prof"), validarInscripcion, crearInscripcionCliente);
+router.post('/clientes/:id/rutinas', validarRol("prof"), validarRutina, crearRutinaCliente);
 
-router.put('/clientes/:id',validarCliente, modificarCliente);
+router.put('/clientes/:id', validarRol("prof"), validarCliente, modificarCliente);
 
-router.patch('/clientes/:id/alta', darAltaCliente);
-router.patch('/clientes/:id/baja', darBajaCliente);
+router.patch('/clientes/:id/alta', validarRol("prof"), darAltaCliente);
+router.patch('/clientes/:id/baja', validarRol("prof"), darBajaCliente);
 
-router.delete('/clientes/:id', eliminarCliente);
+router.delete('/clientes/:id', validarRol("prof"), eliminarCliente);
 
 module.exports = router;

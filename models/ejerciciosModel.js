@@ -10,11 +10,32 @@ const findAllEjercicios = async()=>{
     return ejercicios;
 }
 
+const findAltaEjercicios = async()=>{
+    const [ejercicios] = await pool.query(
+        `SELECT  idEjercicio, nombre, estado
+        FROM ejercicios
+        WHERE estado = 'A'
+        ORDER BY nombre`
+    );
+
+    return ejercicios;
+}
+
 const findEjercicioById = async(id) =>{
     const [ejercicio] = await pool.query(
         `SELECT nombre, estado
         FROM ejercicios
         WHERE idEjercicio = ?`,
+        [id]
+    );
+    return ejercicio;
+}
+
+const findAltaEjercicioById = async(id) =>{
+    const [ejercicio] = await pool.query(
+        `SELECT nombre
+        FROM ejercicios
+        WHERE idEjercicio = ? AND estado = 'A'`,
         [id]
     );
     return ejercicio;
@@ -82,7 +103,9 @@ const deleteEjercicioById = async(id) =>{
 
 module.exports = {
     findAllEjercicios,
+    findAltaEjercicios,
     findEjercicioById,
+    findAltaEjercicioById,
     findEjercicioByNombre,
     insertEjercicio,
     updateEjercicioById,

@@ -1,8 +1,9 @@
 function validarDatosLineaDeRutina (datos){
-    const errores = [];
-    console.log(datos);
+    const errores = {};
+
+    
     if(!Number.isInteger(datos.series))
-        errores.push("Las series deben ser un número");
+        errores.series = "Las series deben ser un número";
 
     return errores;
 }

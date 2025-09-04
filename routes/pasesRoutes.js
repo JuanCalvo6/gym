@@ -12,18 +12,17 @@ const { validarToken } = require('../middlewares/validarToken.js');
 const { validarRol } = require('../middlewares/validarRol.js');
 
 router.use(validarToken);
-// router.use(validarRol("admin"));
 
 router.get('/pases', listarPases);
 router.get('/pases/:id', obtenerPase);
 
-router.post('/pases',validarPase, crearPase);
+router.post('/pases', validarRol("admin"), validarPase, crearPase);
 
-router.put('/pases/:id',validarPase, modificarPase);
+router.put('/pases/:id', validarRol("admin"), validarPase, modificarPase);
 
-router.patch('/pases/:id/baja', darBajaPase);
-router.patch('/pases/:id/alta', darAltaPase);
+router.patch('/pases/:id/baja', validarRol("admin"), darBajaPase);
+router.patch('/pases/:id/alta', validarRol("admin"),  darAltaPase);
 
-router.delete('/pases/:id', eliminarPase);
+router.delete('/pases/:id', validarRol("admin"), eliminarPase);
 
 module.exports = router;

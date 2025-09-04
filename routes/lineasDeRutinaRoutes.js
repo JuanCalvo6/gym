@@ -10,13 +10,12 @@ const { validarToken } = require('../middlewares/validarToken.js');
 const { validarRol } = require('../middlewares/validarRol.js');
 
 router.use(validarToken);
-// router.use(validarRol("prof"));
 
-router.get('/lineasDeRutina', listarLineasDeRutinaRutina);
-router.get('/lineasDeRutina/:id', obtenerLineaDeRutinaRutina);
+router.get('/lineasDeRutina', validarRol("prof"), listarLineasDeRutinaRutina);
+router.get('/lineasDeRutina/:id', validarRol("prof"), obtenerLineaDeRutinaRutina);
 
-router.put('/lineasDeRutina/:id',validarLineaDeRutina, modificarLineaDeRutina);
+router.put('/lineasDeRutina/:id', validarRol("prof"), validarLineaDeRutina, modificarLineaDeRutina);
 
-router.delete('/lineasDeRutina/:id', eliminarLineaDeRutina);
+router.delete('/lineasDeRutina/:id', validarRol("prof"), eliminarLineaDeRutina);
 
 module.exports =  router;

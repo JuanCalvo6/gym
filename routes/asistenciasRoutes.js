@@ -7,11 +7,10 @@ const { validarToken } = require('../middlewares/validarToken.js');
 const { validarRol } = require('../middlewares/validarRol.js');
 
 router.use(validarToken);
-// router.use(validarRol("prof"));
 
-router.get('/asistencias', listarAsistencias);
-router.get('/asistencias/:id', obtenerAsistencia);
+router.get('/asistencias',validarRol("prof"), listarAsistencias);
+router.get('/asistencias/:id',validarRol("prof"), obtenerAsistencia);
 
-router.delete('/asistencias/:id', eliminarAsistencia);
+router.delete('/asistencias/:id',validarRol("prof"), eliminarAsistencia);
 
 module.exports = router;

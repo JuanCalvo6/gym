@@ -14,20 +14,19 @@ const { validarToken } = require('../middlewares/validarToken.js');
 const { validarRol } = require('../middlewares/validarRol.js');
 
 router.use(validarToken);       
-// router.use(validarRol("admin"));
 
-router.get('/rutinas', listarRutinas);
-router.get('/rutinas/:id', obtenerRutina);
-router.get('/rutinas/:id/lineasDeRutina', listarLineasDeRutinaRutina);
-router.get('/rutinas/:id/lineasDeRutina/:idLinea', obtenerLineaDeRutinaRutina);
+router.get('/rutinas', validarRol("prof"), listarRutinas);
+router.get('/rutinas/:id', validarRol("prof"), obtenerRutina);
+router.get('/rutinas/:id/lineasDeRutina', validarRol("prof"), listarLineasDeRutinaRutina);
+router.get('/rutinas/:id/lineasDeRutina/:idLinea', validarRol("prof"), obtenerLineaDeRutinaRutina);
 
-router.post('/rutinas/:id/lineasDeRutina',validarLineaDeRutina,  nuevaLineaDeRutinaRutina);
+router.post('/rutinas/:id/lineasDeRutina', validarRol("prof"), validarLineaDeRutina,  nuevaLineaDeRutinaRutina);
 
-router.put('/rutinas/:id', modificarRutina);
+router.put('/rutinas/:id', validarRol("prof"), modificarRutina);
 
-router.patch('/rutinas/:id/alta', darAltaRutina);
-router.patch('/rutinas/:id/baja', darBajaRutina);
+router.patch('/rutinas/:id/alta', validarRol("prof"), darAltaRutina);
+router.patch('/rutinas/:id/baja', validarRol("prof"), darBajaRutina);
 
-router.delete('/rutinas/:id', eliminarRutina);
+router.delete('/rutinas/:id', validarRol("prof"), eliminarRutina);
 
 module.exports = router;

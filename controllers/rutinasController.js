@@ -88,6 +88,8 @@ const crearRutinaCliente = async(req, res) =>{
         if(cliente.length === 0) return res.status(400).json({message: "No existe un cliente con ese ID"});
         const isMatch = await findRutinaByNombre(nombre, idCliente);
 
+        if(cliente[0].estado === 'B') return res.status(400).json({message: "El cliente debe estar de Alta"})
+
         if(isMatch.length > 0) return res.status(400).json({message: "Ya existe una rutina con ese nombre"});
         await insertRutina(req.body, idCliente);
         return res.status(200).json({message: "Rutina creada con exito"});
