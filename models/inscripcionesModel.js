@@ -2,7 +2,7 @@ const pool = require('../config/db.js');
 
 const findAllInscripciones  = async() =>{
     const [inscripciones] = await pool.query(
-        `SELECT idInscripcion, idProfesor, idCliente, idPase, diaInicio AS inicio ,diaFin AS fin, precio, estado
+        `SELECT idInscripcion, idProfesor, idCliente, idPase, diaInicio, diaFin, precio, estado
         FROM inscripciones`
     );
     return inscripciones;
@@ -62,6 +62,17 @@ const findAltaInscripcionesByIdCliente = async(id) =>{
         WHERE inscripciones.idCliente = ? AND inscripciones.estado = 'A'`,
         [id]
     );
+    return inscripciones;
+}
+
+const findAltaInscripcionesByDiaFin = async(fecha)=>{
+    const [inscripciones] = await pool.query(
+        `SELECT idInscripcion
+        FROM inscripciones
+        WHERE diaFin < ? AND estado = 'A'`,
+        [fecha]
+    );
+
     return inscripciones;
 }
 
@@ -150,6 +161,7 @@ module.exports = {
     findInscripcionById,
     findInscripcionesByIdCliente,
     findAltaInscripcionesByIdCliente,
+    findAltaInscripcionesByDiaFin,
     findInscripcionByIdByIdCliente,
     insertInscripcion,
     updateInscripcionById,

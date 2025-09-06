@@ -5,6 +5,7 @@ const   {findAllProfesores,
         findProfesorByMail,
         insertProfesor,
         updateProfesorById,
+        updateContraseñaProfesorById,
         updateBajaProfesorById,
         updateAltaProfesorById,
         deleteProfesorById} =  require('../models/profesoresModel.js');
@@ -80,6 +81,25 @@ const modificarProfesor = async(req, res) =>{
     }
 }
 
+const modificarContraseñaProfesor = async(req, res) =>{
+    const id = parseInt(req.params.id, 10);
+    const {contraseña} = req.body;
+
+    try {
+        const isMatchId = await findProfesorById(id);
+        if(isMatchId.length === 0) return res.status(409).json({message: "No existe un profesor con ese ID"});
+
+        const contraseñaHash = await bcrypt.hash(contraseña, 10);
+        await updateContraseñaProfesorById(id, contraseñaHash);
+        
+        return res.status(201).json({message: "Contraseña modificada con exito"})
+
+    } catch (error) {
+        return res.status(400).json({message: error.message})
+    }
+
+}
+
 const darBajaProfesor = async(req, res) =>{
     const id = parseInt(req.params.id, 10);
 
@@ -133,6 +153,7 @@ module.exports = {
     listarProfesores,
     nuevoProfesor,
     modificarProfesor,
+    modificarContraseñaProfesor,
     darBajaProfesor,
     darAltaProfesor,
     eliminarProfesor

@@ -79,6 +79,17 @@ const updateProfesorById = async(datos,id) =>{
     return;
 }
 
+const updateContraseñaProfesorById = async(id, contraseña) =>{
+    await pool.query(
+        `UPDATE profesores
+        SET contraseña = ?
+        WHERE idProfesor = ?`,
+        [contraseña, id]
+    );
+
+    return;
+}
+
 const updateBajaProfesorById = async(id) =>{
     await pool.query(
         `UPDATE profesores
@@ -116,6 +127,7 @@ module.exports = {
     findProfesorByMail,
     insertProfesor,
     updateProfesorById,
+    updateContraseñaProfesorById,
     updateBajaProfesorById,
     updateAltaProfesorById,
     deleteProfesorById
