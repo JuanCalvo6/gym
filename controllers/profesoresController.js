@@ -1,4 +1,3 @@
-const bcrypt = require('bcryptjs');
 const   {findAllProfesores,
          findProfesorById,
         findProfesorByDniByUsuario,
@@ -9,6 +8,7 @@ const   {findAllProfesores,
         updateBajaProfesorById,
         updateAltaProfesorById,
         deleteProfesorById} =  require('../models/profesoresModel.js');
+const {hashearContraseña} = require('../utils/hashearContraseña.js');
 
 const listarProfesores = async(req, res) =>{
     try {
@@ -47,7 +47,7 @@ const nuevoProfesor = async(req, res) =>{
         if(matchMail.length > 0)
             return res.status(400).json({message: "Ya existe un profesor con ese mail."})
         
-        const contraseñaHash = await bcrypt.hash(contraseña, 10);
+        const contraseñaHash = await hashearContraseña(contraseña);
         req.body.contraseña = contraseñaHash;
 
         await insertProfesor(req.body);
@@ -89,7 +89,7 @@ const modificarContraseñaProfesor = async(req, res) =>{
         const isMatchId = await findProfesorById(id);
         if(isMatchId.length === 0) return res.status(409).json({message: "No existe un profesor con ese ID"});
 
-        const contraseñaHash = await bcrypt.hash(contraseña, 10);
+        const contraseñaHash = await hashearContraseña(contraseña);
         await updateContraseñaProfesorById(id, contraseñaHash);
         
         return res.status(201).json({message: "Contraseña modificada con exito"})

@@ -1,8 +1,12 @@
 function validarDatosLogin(datos, cookies){
+    const errores = {};
+    if(!datos){
+        errores.datos = "No se enviaron datos";
+        return errores;
+    }
     const {usuario, contraseña } =  datos;
     const {token} = cookies;
-    const errores = {};
-
+    
     if(token) 
         errores.token = "Ya hay una sesión iniciada";
 
