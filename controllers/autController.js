@@ -10,12 +10,12 @@ const login = async(req, res) =>{
     try {
         const userFound = await findUsuario(usuario);
 
-        if(userFound.length === 0) return res.status(400).json({message: 'Usuario incorrectos'});
+        if(userFound.length === 0) return res.status(400).json({message: 'datos incorrectos'});
         const contraseñaHash = userFound[0].contraseña;
 
         const isMatch = await bcrypt.compare(contraseña,contraseñaHash);
 
-        if(!isMatch) return res.status(400).json({message: 'Contraseña incorrectos'});
+        if(!isMatch) return res.status(400).json({message: 'datos incorrectos'});
 
         const {id,nombre,usuario: user, tipo} =  userFound[0];
         const token = await generarToken({

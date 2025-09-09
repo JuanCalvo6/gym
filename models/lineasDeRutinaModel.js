@@ -2,7 +2,7 @@ const pool =  require('../config/db.js');
 
 const findAllLineasDeRutina = async() =>{
     const [lineasDeRutina] = await pool.query(
-        `SELECT idLineaDeRutina,idCliente, idEjercicio, idRutina, repeticiones, series, descanso
+        `SELECT idLineaDeRutina, ejercicio, idCliente, idRutina, repeticiones, series, descanso
         FROM lineasDeRutina`
     );
     return lineasDeRutina;
@@ -10,28 +10,17 @@ const findAllLineasDeRutina = async() =>{
 
 const findLineasDeRutinaByIdRutina = async(idRutina) =>{
     const [lineasDeRutina] = await pool.query(
-        `SELECT idLineaDeRutina,idCliente, ejercicios.idEjercicio, ejercicios.nombre, repeticiones, series, descanso
+        `SELECT  idLineaDeRutina, ejercicio, idCliente, repeticiones, series, descanso
         FROM lineasDeRutina
-        JOIN ejercicios ON lineasDeRutina.idEjercicio = ejercicios.idEjercicio
         WHERE idRutina = ?`,
         [idRutina]
     );
     return lineasDeRutina;
 }
 
-const findLineasDeRutinaByIdEjercicioByIdRutina = async(idRutina, idEjercicio) =>{
-    const [lineasDeRutina] = await pool.query(
-        `SELECT idLineaDeRutina
-        FROM lineasDeRutina
-        WHERE idRutina = ? AND idEjercicio =  ?`,
-        [idRutina, idEjercicio]
-    );
-    return lineasDeRutina;
-}
-
 const findLineaDeRutinaById = async(idLinea) =>{
     const [lineaDeRutina] = await pool.query(
-        `SELECT idRutina, idCliente, idEjercicio, repeticiones, series, descanso
+        `SELECT idRutina, ejercicio, idCliente, repeticiones, series, descanso
         FROM lineasDeRutina
         WHERE idLineaDeRutina = ?`,
         [idLinea]
@@ -41,7 +30,7 @@ const findLineaDeRutinaById = async(idLinea) =>{
 
 const findLineaDeRutinaByIdByIdRutina = async(idRutina, idLinea) =>{
     const [lineaDeRutina] = await pool.query(
-        `SELECT idCliente, idEjercicio, repeticiones, series, descanso
+        `SELECT ejercicio, idCliente, repeticiones, series, descanso
         FROM lineasDeRutina
         WHERE idRutina = ? AND idLineaDeRutina = ?`,
         [idRutina, idLinea]
@@ -52,9 +41,9 @@ const findLineaDeRutinaByIdByIdRutina = async(idRutina, idLinea) =>{
 const insertLineaDeRutina = async(datos, idRutina, idCliente) =>{
     await pool.query(
         `INSERT INTO lineasDeRutina
-        (idEjercicio, idRutina, idCliente, repeticiones, series, descanso )
+        (ejercicio, idRutina, idCliente, repeticiones, series, descanso )
         VALUES (?, ?, ?, ?, ?, ?)`,
-        [datos.idEjercicio,
+        [datos.ejercicio,
         idRutina,
         idCliente,
         datos.repeticiones,
@@ -68,14 +57,14 @@ const insertLineaDeRutina = async(datos, idRutina, idCliente) =>{
 const updateLineaDeRutinaById = async(datos, idLinea, idRutina, idCliente) =>{
     await pool.query(
         `UPDATE lineasDeRutina
-        SET idEjercicio = ?,
+        SET ejercicio = ?,
             idRutina = ?,
             idCliente = ?,
             repeticiones = ?,
             series = ?,
             descanso = ?
         WHERE idLineaDeRutina = ?`,
-        [datos.idEjercicio,
+        [datos.ejercicio,
         idRutina,
         idCliente,
         datos.repeticiones,
@@ -99,7 +88,6 @@ const deleteLineaDeRutinaById = async(idLinea) =>{
 module.exports = {
     findAllLineasDeRutina,
     findLineasDeRutinaByIdRutina,
-    findLineasDeRutinaByIdEjercicioByIdRutina,
     findLineaDeRutinaById,
     findLineaDeRutinaByIdByIdRutina,
     insertLineaDeRutina,

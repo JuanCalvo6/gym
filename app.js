@@ -2,7 +2,6 @@ const express = require('express');
 const cors = require('cors');
 const autRoutes = require('./routes/autRoutes.js');
 const profesoresRoutes = require('./routes/profesoresRoutes.js')
-const ejerciciosRoutes =  require('./routes/ejerciciosRoutes.js');
 const pasesRoutes = require('./routes/pasesRoutes.js');
 const clientesRoutes = require('./routes/clientesRoutes.js');
 const asistenciasRoutes = require('./routes/asistenciasRoutes.js');
@@ -26,7 +25,6 @@ app.use(toLowerCaseMiddleware);
 //1. Iniciar sesión requiere autenticaciones...
 app.use('/api', autRoutes);
 app.use('/api', profesoresRoutes);
-app.use('/api', ejerciciosRoutes);
 app.use('/api', pasesRoutes);
 app.use('/api', clientesRoutes);
 app.use('/api', asistenciasRoutes);

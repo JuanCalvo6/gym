@@ -29,7 +29,7 @@ const findProfesorByDniByUsuario = async(dni, usuario) =>{
 }
 
 const findProfesorByMail = async(mail) =>{
-    const [profesor] = await pool.querry(
+    const [profesor] = await pool.query(
         `SELECT idProfesor
         FROM profesores
         WHERE mail = ?`,
