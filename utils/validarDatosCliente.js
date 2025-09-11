@@ -19,9 +19,6 @@ function validarDatosCliente (datos){
         errores.dni = "El documento es obligatorio";
     else if(!/^\d{1,20}$/.test(datos.dni))
         errores.dni = "El dni solo acepta números";
-    
-    if(!datos.huella)
-        errores.huella = "La huella es obligatoria";
 
     if(datos.telefono && !/^\d{1,20}$/.test(datos.telefono))
         errores.telefono = "El telefono solo acepta números";

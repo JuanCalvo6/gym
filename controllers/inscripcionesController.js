@@ -1,4 +1,4 @@
-const { findClienetById } = require('../models/clientesModel.js');
+const { findClienteById } = require('../models/clientesModel.js');
 const {findProfesorById} = require('../models/profesoresModel.js');
 const {findPaseById} = require('../models/pasesModel.js');
 const { findAllInscripciones ,
@@ -44,7 +44,7 @@ const listarInscripcionesCliente = async(req, res) =>{
     const bajas = incluirBajas === 'true';
 
     try {
-        const cliente = await findClienetById(id);
+        const cliente = await findClienteById(id);
 
         if(cliente.length === 0) return res.status(400).json({message: "No existe un cliente con ese ID"});
 
@@ -68,7 +68,7 @@ const obtenerInscripcionCliente = async(req, res) =>{
     const idInscripcion = parseInt(req.params.idInscripcion, 10);
 
     try {
-        const cliente = await findClienetById(idCliente);
+        const cliente = await findClienteById(idCliente);
 
         if(cliente.length === 0) return res.status(400).json({message: "No existe un cliente con ese ID"});
         const inscripcion = await findInscripcionByIdByIdCliente(idCliente, idInscripcion);
@@ -86,7 +86,7 @@ const crearInscripcionCliente = async(req, res) =>{
     const {idProfesor, idPase} = req.body;
     
     try {
-        const cliente = await findClienetById(idCliente);
+        const cliente = await findClienteById(idCliente);
 
         if(cliente.length === 0) return res.status(400).json({message: "No existe un cliente con ese ID"});
         const profesor = await findProfesorById(idProfesor);

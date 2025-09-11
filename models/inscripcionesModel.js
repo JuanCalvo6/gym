@@ -53,6 +53,8 @@ const findAltaInscripcionesByIdCliente = async(id) =>{
 	        inscripciones.idInscripcion,
             inscripciones.idProfesor,
             pases.nombre AS pase,
+            pases.horaInicio,
+            pases.horaFin,
             inscripciones.diaInicio,
             inscripciones.diaFin, 
             inscripciones.precio,
@@ -74,6 +76,30 @@ const findAltaInscripcionesByDiaFin = async(fecha)=>{
     );
 
     return inscripciones;
+}
+
+const findAltaInscripcionesByFecha = async(fecha, id)=>{
+    const [inscripciones] = await pool.query(
+        `SELECT idInscripcion
+        FROM inscripciones
+        WHERE (? BETWEEN diaInicio AND diaFin) AND (estado = 'A') AND (idCliente = ?)`,
+        [fecha, id]
+    );
+
+    return inscripciones;
+}
+
+const findInscripcionByHora = async(id, fecha) =>{
+    const [inscripcion] = await pool.query(
+        `SELECT pases.horaInicio,
+                pases.horaFin
+        FROM inscripciones
+        JOIN pases ON inscripciones.idPase = pases.idPase
+        WHERE inscripciones.idInscripcion = ? AND
+              (TIME( ? ) BETWEEN pases.horaInicio AND pases.horaFin)`,
+        [id, fecha]
+    );
+    return inscripcion;
 }
 
 const findInscripcionByIdByIdCliente = async(idCliente, idInscripcion) =>{
@@ -162,6 +188,8 @@ module.exports = {
     findInscripcionesByIdCliente,
     findAltaInscripcionesByIdCliente,
     findAltaInscripcionesByDiaFin,
+    findAltaInscripcionesByFecha,
+    findInscripcionByHora,
     findInscripcionByIdByIdCliente,
     insertInscripcion,
     updateInscripcionById,

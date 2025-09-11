@@ -2,7 +2,7 @@ const pool = require('../config/db.js');
 
 const findAllClientes = async() =>{
     const [clientes] =  await pool.query(
-        `SELECT idCliente, nombres, apellidos, tipoDni, dni, huella, telefono, direccion, mail, estado
+        `SELECT idCliente, nombres, apellidos, tipoDni, dni, telefono, direccion, mail, estado
         FROM clientes
         ORDER BY estado, apellidos, nombres`
     );
@@ -13,7 +13,7 @@ const findAllClientesByNombresByApellidos = async(cadena) =>{
     const exp = `${cadena}%`;
 
     const [clientes] =  await pool.query(
-        `SELECT idCliente, nombres, apellidos, tipoDni, dni, huella, telefono, direccion, mail, estado
+        `SELECT idCliente, nombres, apellidos, tipoDni, dni, telefono, direccion, mail, estado
         FROM clientes
         WHERE apellidos LIKE ? OR nombres LIKE ?
         ORDER BY estado, apellidos, nombres`,
@@ -24,7 +24,7 @@ const findAllClientesByNombresByApellidos = async(cadena) =>{
 
 const findAltaClientes = async() =>{
     const [clientes] =  await pool.query(
-        `SELECT idCliente, nombres, apellidos, tipoDni, dni, huella, telefono, direccion, mail, estado
+        `SELECT idCliente, nombres, apellidos, tipoDni, dni, telefono, direccion, mail, estado
         FROM clientes
         WHERE estado = 'A'
         ORDER BY estado, apellidos, nombres`
@@ -36,7 +36,7 @@ const findAltaClientesByNombresByApellidos = async(cadena) =>{
     const exp = `${cadena}%`;
 
     const [clientes] =  await pool.query(
-        `SELECT idCliente, nombres, apellidos, tipoDni, dni, huella, telefono, direccion, mail, estado
+        `SELECT idCliente, nombres, apellidos, tipoDni, dni, telefono, direccion, mail, estado
         FROM clientes
         WHERE estado = 'A' AND (apellidos LIKE ? OR nombres LIKE ?)
         ORDER BY estado, apellidos, nombres`,
@@ -45,9 +45,9 @@ const findAltaClientesByNombresByApellidos = async(cadena) =>{
     return clientes;
 }
 
-const findClienetById = async(id) =>{
+const findClienteById = async(id) =>{
     const [cliente] = await pool.query(
-        `SELECT nombres, apellidos, tipoDni, dni, huella, telefono, direccion, mail, estado
+        `SELECT nombres, apellidos, tipoDni, dni, telefono, direccion, mail, estado
         FROM clientes
         WHERE idCliente = ?`,
         [id]
@@ -55,9 +55,20 @@ const findClienetById = async(id) =>{
     return cliente;
 }
 
+const findClienteByDni = async(dni) =>{
+    const [cliente] = await pool.query(
+        `SELECT nombres, apellidos, tipoDni, dni, telefono, direccion, mail, estado
+        FROM clientes
+        WHERE dni = ?`,
+        [dni]
+    );
+
+    return cliente;
+}
+
 const findAltaClienteById = async(id) =>{
     const [cliente] = await pool.query(
-        `SELECT nombres, apellidos, tipoDni, dni, huella, telefono, direccion, mail, estado
+        `SELECT nombres, apellidos, tipoDni, dni, telefono, direccion, mail, estado
         FROM clientes
         WHERE idCliente = ? AND estado = 'A'`,
         [id]
@@ -68,13 +79,12 @@ const findAltaClienteById = async(id) =>{
 const insertCliente = async(datos) =>{
     await pool.query(
         `INSERT INTO clientes
-        (nombres, apellidos, tipoDni, dni, huella, telefono, direccion, mail, estado)
-        VALUES (?, ?, ?, ?, ?, ?, ?, ?, 'A')`,
+        (nombres, apellidos, tipoDni, dni, telefono, direccion, mail, estado)
+        VALUES (?, ?, ?, ?, ?, ?, ?, 'A')`,
         [datos.nombres,
         datos.apellidos,
         datos.tipoDni,
         datos.dni,
-        datos.huella,
         datos.telefono,
         datos.direccion,
         datos.mail]
@@ -90,7 +100,6 @@ const updateClienteById = async(datos, id) =>{
             apellidos = ?,
             tipoDni = ?,
             dni = ?,
-            huella = ?,
             telefono = ?,
             direccion = ?,
             mail = ?,
@@ -100,7 +109,6 @@ const updateClienteById = async(datos, id) =>{
         datos.apellidos,
         datos.tipoDni,
         datos.dni,
-        datos.huella,
         datos.telefono,
         datos.direccion,
         datos.mail,
@@ -143,7 +151,8 @@ const deleteClienteById = async(id) =>{
 module.exports = {
     findAllClientes, findAllClientesByNombresByApellidos,
     findAltaClientes, findAltaClientesByNombresByApellidos,
-    findClienetById,
+    findClienteById,
+    findClienteByDni,
     findAltaClienteById,
     insertCliente,
     updateClienteById, 
